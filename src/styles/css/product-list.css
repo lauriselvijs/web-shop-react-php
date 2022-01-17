@@ -1,0 +1,45 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.line-break-header {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+}
+
+.product-list-header {
+  width: 100%;
+  padding-left: 30px;
+}
+
+.heading-product-list {
+  display: inline-block;
+  padding-right: 65%;
+}
+
+.add-item-btn,
+.mass-delete-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  margin: 3px;
+  background-color: white;
+  color: black;
+  border: 1px solid;
+  box-shadow: 2px 4px;
+}
+
+.add-item-btn:active {
+  background-color: #3e8e41;
+  color: white;
+  transform: translateY(2px);
+  transform: translateX(2px);
+}
+
+.mass-delete-btn:active {
+  background-color: red;
+  color: white;
+  transform: translateY(2px);
+  transform: translateX(2px);
+}
