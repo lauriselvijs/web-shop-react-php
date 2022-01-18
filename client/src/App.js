@@ -3,13 +3,19 @@ import ProductList from "./components/ProductList";
 import AddProduct from "./components/AddProduct";
 import Footer from "./components/Footer";
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export class App extends Component {
   render() {
     return (
       <div>
-        <AddProduct />
-        <Footer />
+        <Router>
+          <Routes>
+            <Route path="/" element={<ProductList />}></Route>
+            <Route path="/addproduct" element={<AddProduct />}></Route>
+          </Routes>
+          <Footer />
+        </Router>
       </div>
     );
   }

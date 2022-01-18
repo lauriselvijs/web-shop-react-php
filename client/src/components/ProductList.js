@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import ProductItem from "./ProductItem";
 import "../styles/css/product-list.css";
+import { Link } from "react-router-dom";
 
 export class ProductList extends Component {
   constructor(props) {
     super(props);
 
-    this.deleteProduct = this.deleteProduct.bind(this);
+    this.setIdArray = this.setIdArray.bind(this);
+    this.onDelete = this.onDelete.bind(this);
 
     this.state = {
       products: [
@@ -65,11 +67,16 @@ export class ProductList extends Component {
           productSpecificAtr: "Dimension: 12x24x45",
         },
       ],
+      idArray: [],
     };
   }
 
-  deleteProduct(id) {
-    console.log("delete item", id);
+  setIdArray(id) {
+    this.setState({ idArray: [...this.state.idArray, id] });
+  }
+
+  onDelete() {
+    console.log("delete", this.state.idArray);
   }
 
   render() {
@@ -79,8 +86,14 @@ export class ProductList extends Component {
       <>
         <header className="product-list-header">
           <h1 className="heading-product-list">Product List</h1>
-          <button className="add-item-btn">ADD</button>
-          <button id="delete-product-btn" className="mass-delete-btn">
+          <Link to={"/addproduct"}>
+            <button className="add-item-btn">ADD</button>
+          </Link>
+          <button
+            id="delete-product-btn"
+            className="mass-delete-btn"
+            onClick={this.onDelete}
+          >
             MASS DELETE
           </button>
         </header>
@@ -90,7 +103,7 @@ export class ProductList extends Component {
             <ProductItem
               key={product.SKU}
               product={product}
-              onDelete={this.deleteProduct.bind(this, product.id)}
+              onDelete={this.setIdArray.bind(this, product.SKU)}
             />
           ))}
         </div>

@@ -5,6 +5,7 @@ export class ProductItem extends Component {
   render() {
     const {
       product: { SKU, name, price, productSpecificAtr },
+      onDelete,
     } = this.props;
 
     return (
@@ -13,11 +14,7 @@ export class ProductItem extends Component {
         <div>{name}</div>
         <div>{price}</div>
         <div>{productSpecificAtr}</div>
-        <input
-          type="checkbox"
-          className="delete-checkbox"
-          onClick={this.props.onDelete}
-        />
+        <input type="checkbox" className="delete-checkbox" onClick={onDelete} />
       </div>
     );
   }

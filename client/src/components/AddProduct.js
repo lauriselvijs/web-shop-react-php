@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import "../styles/css/add-product.css";
 import InputErrMsg from "./InputErrMsg";
+import { Link } from "react-router-dom";
 
 export class AddProduct extends Component {
   constructor(props) {
     super(props);
 
-    this.onSave = this.onSave.bind(this);
+    this.onSaveDvd = this.onSaveDvd.bind(this);
+    this.onSaveFurniture = this.onSaveFurniture.bind(this);
+    this.onSaveBook = this.onSaveBook.bind(this);
 
     this.onSKUChange = this.onSKUChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
@@ -80,64 +83,192 @@ export class AddProduct extends Component {
     this.setState({ bookWeight: e.target.value });
   }
 
-  onSave(e) {
+  onSaveDvd(e) {
     e.preventDefault();
 
-    this.setState({
-      productObj: {
-        SKU: this.state.SKU,
-        name: this.state.name,
-        price: this.state.price,
-      },
-    });
+    const emptyValueArray = [];
+    const correctDataType = [];
 
-    if (this.state.selectValue === "DVD") {
-      this.setState((prevState) => ({
-        productObj: {
-          ...prevState.productObj,
-          dvdSize: this.state.dvdSize,
-        },
-      }));
+    this.state.SKU === "" && emptyValueArray.push("SKU");
+    this.state.name === "" && emptyValueArray.push("name");
+    this.state.price === "" && emptyValueArray.push("price");
+    this.state.dvdSize === "" && emptyValueArray.push("dvd size");
+
+    typeof this.state.SKU !== "string" && correctDataType.push("SKU");
+    typeof this.state.name !== "string" && correctDataType.push("name");
+    isNaN(this.state.price) && correctDataType.push("price");
+    isNaN(this.state.dvdSize) && correctDataType.push("dvd size");
+
+    if (emptyValueArray.length === 0) {
+      if (correctDataType.length === 0) {
+        this.setState({
+          productObj: {
+            SKU: this.state.SKU,
+            name: this.state.name,
+            price: this.state.price,
+            dvdSize: this.state.dvdSize,
+            error: false,
+          },
+        });
+      } else {
+        this.setState({
+          errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
+            (value) => " " + value
+          )}`,
+          error: true,
+        });
+      }
+    } else {
+      this.setState({
+        errorMsg: `Please, submit required data ${emptyValueArray.map(
+          (value) => " " + value
+        )}`,
+        error: true,
+      });
     }
+  }
+  onSaveFurniture(e) {
+    e.preventDefault();
 
-    if (this.state.selectValue === "Furniture") {
-      this.setState((prevState) => ({
-        productObj: {
-          ...prevState.productObj,
-          furnitureHeight: this.state.furnitureHeight,
-          furnitureLength: this.state.furnitureLength,
-          furnitureWidth: this.state.furnitureWidth,
-        },
-      }));
+    const emptyValueArray = [];
+    const correctDataType = [];
+
+    this.state.SKU === "" && emptyValueArray.push("SKU");
+    this.state.name === "" && emptyValueArray.push("name");
+    this.state.price === "" && emptyValueArray.push("price");
+    this.state.furnitureHeight === "" && emptyValueArray.push("height");
+    this.state.furnitureLength === "" && emptyValueArray.push("length");
+    this.state.furnitureWidth === "" && emptyValueArray.push("width");
+
+    typeof this.state.SKU !== "string" && correctDataType.push("SKU");
+    typeof this.state.name !== "string" && correctDataType.push("name");
+    isNaN(this.state.price) && correctDataType.push("price");
+    isNaN(this.state.furnitureHeight) && correctDataType.push("height");
+    isNaN(this.state.furnitureLength) && correctDataType.push("length");
+    isNaN(this.state.furnitureWidth) && correctDataType.push("width");
+
+    if (emptyValueArray.length === 0) {
+      if (correctDataType.length === 0) {
+        this.setState({
+          productObj: {
+            SKU: this.state.SKU,
+            name: this.state.name,
+            price: this.state.price,
+            furnitureHeight: this.state.furnitureHeight,
+            furnitureLength: this.state.furnitureLength,
+            furnitureWidth: this.state.furnitureWidth,
+            error: false,
+          },
+        });
+      } else {
+        this.setState({
+          errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
+            (value) => " " + value
+          )}`,
+          error: true,
+        });
+      }
+    } else {
+      this.setState({
+        errorMsg: `Please, submit required data ${emptyValueArray.map(
+          (value) => " " + value
+        )}`,
+        error: true,
+      });
     }
+  }
+  onSaveBook(e) {
+    e.preventDefault();
 
-    if (this.state.selectValue === "Book") {
-      this.setState((prevState) => ({
-        productObj: {
-          ...prevState.productObj,
-          bookWeight: this.state.bookWeight,
-        },
-      }));
+    const emptyValueArray = [];
+    const correctDataType = [];
+
+    this.state.SKU === "" && emptyValueArray.push("SKU");
+    this.state.name === "" && emptyValueArray.push("name");
+    this.state.price === "" && emptyValueArray.push("price");
+    this.state.bookWeight === "" && emptyValueArray.push("book weight");
+
+    typeof this.state.SKU !== "string" && correctDataType.push("SKU");
+    typeof this.state.name !== "string" && correctDataType.push("name");
+    isNaN(this.state.price) && correctDataType.push("price");
+    isNaN(this.state.bookWeight) && correctDataType.push("book weight");
+
+    if (emptyValueArray.length === 0) {
+      if (correctDataType.length === 0) {
+        this.setState({
+          productObj: {
+            SKU: this.state.SKU,
+            name: this.state.name,
+            price: this.state.price,
+            bookWeight: this.state.bookWeight,
+            error: false,
+          },
+        });
+      } else {
+        this.setState({
+          errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
+            (value) => " " + value
+          )}`,
+          error: true,
+        });
+      }
+    } else {
+      this.setState({
+        errorMsg: `Please, submit required data ${emptyValueArray.map(
+          (value) => " " + value
+        )}`,
+        error: true,
+      });
     }
   }
 
   render() {
-    const { error, errorMsg, selectValue, productObj } = this.state;
+    const { error, errorMsg, selectValue } = this.state;
 
-    console.log(productObj);
     return (
       <>
         <header className="product-add-header">
           <h1 className="heading-product-add">Product Add</h1>
-          <button
-            type="submit"
-            form="product_form"
-            onClick={this.onSave}
-            className="save-btn"
-          >
-            Save
-          </button>
-          <button className="cancel-btn">Cancel</button>
+          {selectValue === "DVD" && (
+            <>
+              <button
+                type="submit"
+                form="product_form"
+                onClick={this.onSaveDvd}
+                className="save-btn"
+              >
+                Save
+              </button>
+            </>
+          )}
+          {selectValue === "Furniture" && (
+            <>
+              <button
+                type="submit"
+                form="product_form"
+                onClick={this.onSaveFurniture}
+                className="save-btn"
+              >
+                Save
+              </button>
+            </>
+          )}
+          {selectValue === "Book" && (
+            <>
+              <button
+                type="submit"
+                form="product_form"
+                onClick={this.onSaveBook}
+                className="save-btn"
+              >
+                Save
+              </button>
+            </>
+          )}
+
+          <Link to={"/"}>
+            <button className="cancel-btn">Cancel</button>
+          </Link>
         </header>
         <hr className="line-break-header" />
         <div className="container">
@@ -153,7 +284,6 @@ export class AddProduct extends Component {
                   placeholder="Enter name SKU"
                   value={this.state.SKU}
                   onChange={this.onSKUChange}
-                  required
                 />
               </div>
             </div>
@@ -168,7 +298,6 @@ export class AddProduct extends Component {
                   placeholder="Enter product name"
                   value={this.state.name}
                   onChange={this.onNameChange}
-                  required
                 />
               </div>
             </div>
@@ -178,14 +307,11 @@ export class AddProduct extends Component {
               </div>
               <div className="col-75">
                 <input
-                  type="number"
-                  min="0.00"
-                  step="0.01"
+                  type="text"
                   id="price"
                   placeholder="Enter product price"
                   value={this.state.price}
                   onChange={this.onPriceChange}
-                  required
                 />
               </div>
             </div>
@@ -220,14 +346,11 @@ export class AddProduct extends Component {
                   </div>
                   <div className="col-75">
                     <input
-                      type="number"
-                      min="1"
-                      step="1"
+                      type="text"
                       id="dvd-size"
                       placeholder="DVD Size"
                       value={this.state.dvdSize}
                       onChange={this.onDvdSizeChange}
-                      required
                     />
                     <div style={{ padding: "10px", fontSize: "14px" }}>
                       Please, provide size in MB
@@ -245,14 +368,11 @@ export class AddProduct extends Component {
                   </div>
                   <div className="col-75">
                     <input
-                      type="number"
-                      min="1"
-                      step="1"
+                      type="text"
                       id="height"
                       placeholder="Height"
                       value={this.state.furnitureHeight}
                       onChange={this.onFurnitureHeightChange}
-                      required
                     />
                     <div style={{ padding: "10px", fontSize: "14px" }}>
                       Please, provide height in CM
@@ -266,14 +386,11 @@ export class AddProduct extends Component {
                   </div>
                   <div className="col-75">
                     <input
-                      type="number"
-                      min="1"
-                      step="1"
+                      type="text"
                       id="width"
                       placeholder="Width"
                       value={this.state.furnitureWidth}
                       onChange={this.onFurnitureWidthChange}
-                      required
                     />
                     <div style={{ padding: "10px", fontSize: "14px" }}>
                       Please, provide width in CM
@@ -287,14 +404,11 @@ export class AddProduct extends Component {
                   </div>
                   <div className="col-75">
                     <input
-                      type="number"
-                      min="1"
-                      step="1"
+                      type="text"
                       id="length"
                       placeholder="Length"
                       value={this.state.furnitureLength}
                       onChange={this.onFurnitureLengthChange}
-                      required
                     />
                     <div style={{ padding: "10px", fontSize: "14px" }}>
                       Please, provide length in CM
@@ -312,14 +426,11 @@ export class AddProduct extends Component {
                   </div>
                   <div className="col-75">
                     <input
-                      type="number"
-                      min="0.01"
-                      step="0.01"
+                      type="text"
                       id="book-weight"
                       placeholder="Weight"
                       value={this.state.bookWeight}
                       onChange={this.onBookWeightSizeChange}
-                      required
                     />
                     <div style={{ padding: "10px", fontSize: "14px" }}>
                       Please, provide weight in KG

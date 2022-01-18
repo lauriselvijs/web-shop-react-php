@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import "../styles/css/error-msg.css";
 
 export class InputErrMsg extends Component {
   render() {
     const { errorMsg } = this.props;
 
-    return <div>{errorMsg}</div>;
+    return <div className="error-msg">{errorMsg}</div>;
   }
 }
 
