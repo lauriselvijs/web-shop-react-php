@@ -4,15 +4,15 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-include_once '../../config/Database.php';
-include_once '../../models/Product.php';
+require_once '../../config/Database.php';
+require_once '../../models/Product.php';
 
 // Instantiate DB and connect
 $database = new Database();
 $db = $database->connect();
 
 // Instantiate product object
-$product = new Product($db);
+$product = new react_php_test\models\Product($db);
 
-$product->read();
+// Read product information
 echo json_encode($product->read());

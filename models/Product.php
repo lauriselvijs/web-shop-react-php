@@ -1,12 +1,16 @@
 <?php
-include_once '../../models/CRUD.php';
+
+namespace react_php_test\models;
+
+require_once '../../models/CRUD.php';
 
 class Product extends CRUD
 {
     // DB conn
-    public $conn;
-    public $table = 'products';
+    private $conn;
+    private $table = 'products';
 
+    public $id;
     public $sku;
     public $name;
     public $price;
@@ -17,7 +21,7 @@ class Product extends CRUD
         $this->conn = $this->db;
 
 
-        // Create query
+        // Read query
         $query = 'SELECT 
        id,
        sku,
@@ -41,11 +45,12 @@ class Product extends CRUD
             // Product array
             $products_arr['data'] = array();
 
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 extract($row);
 
                 $product_item = array(
-                    'SKU' => $SKU,
+                    'id' => $id,
+                    'sku' => $sku,
                     'name' => $name,
                     'price' => $price,
                     'product_attribute' => $product_attribute,
@@ -68,30 +73,84 @@ class Product extends CRUD
         $this->conn = $this->db;
 
 
+        $data_missing = array();
+        $correct_data = array();
+
+        // Check if data empty
+        $this->sku === "" && $data_missing[] = 'SKU';
+        $this->name === "" && $data_missing[] = 'name';
+        $this->price === "" && $data_missing[] = 'price';
+        $this->product_attribute === "" && $data_missing[] = 'product_attribute';
+
+        // Clean data
+        $product_attr_number = str_replace(array('X', 'x'), '', $this->product_attribute);
+
+        // Check if correct data format
+        !is_numeric($this->price) && $correct_data[] = 'price';
+        !is_numeric($product_attr_number) && $correct_data[] = 'product_attribute';
+
+        if (empty($data_missing)) {
+            if (empty($correct_data)) {
+                // Create query
+                $query = 'INSERT INTO ' . $this->table . '
+                     SET sku = :sku, name =  :name, price = :price, product_attribute = :product_attribute';
+
+                // Prepare statement
+                $stmt = $this->conn->prepare($query);
+
+                //Clean data
+                $this->sku = htmlspecialchars(strip_tags($this->sku));
+                $this->name = htmlspecialchars(strip_tags($this->name));
+                $this->price = htmlspecialchars(strip_tags($this->price));
+                $this->product_attribute = htmlspecialchars(strip_tags($this->product_attribute));
+
+                // Bind data
+                $stmt->bindParam(':sku', $this->sku);
+                $stmt->bindParam(':name', $this->name);
+                $stmt->bindParam(':price', $this->price);
+                $stmt->bindParam(':product_attribute', $this->product_attribute);
+
+                if ($stmt->execute()) {
+                    return array('message' => 'Product Created');
+                } else {
+                    // Print error if something goes wrong
+                    return array('Error: %s.\n', $stmt->error);
+                }
+            } else {
+                return ['incorrect data' => $correct_data];
+            }
+        } else {
+            return ['empty data' => $data_missing];
+        }
+    }
+
+    public function delete(): string
+    {
+        $this->conn = $this->db;
+
         // Create query
-        $query = 'INSERT INTO ' . $this->table . '
-       SET
-           sku = ' . $this->sku . ', name =  ' . $this->name . ', price = '  . $this->price . ', product_attribute = ' . $this->product_attribute .  '';
-
-
+        $query = "DELETE FROM " . $this->table . ' WHERE id = :id';
 
         // Prepare statement
         $stmt = $this->conn->prepare($query);
 
-        //Clean data
-        $this->sku = htmlspecialchars(strip_tags($this->sku));
-        $this->name = htmlspecialchars(strip_tags($this->name));
-        $this->price = htmlspecialchars(strip_tags($this->price));
-        $this->product_attribute = htmlspecialchars(strip_tags($this->product_attribute));
+        // Clean data
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $stmt->execute();
+        // Bind data
+        $stmt->bindParam(':id', $this->id);
+
 
         if ($stmt->execute()) {
-            return array('message' => 'Product Created');
-        } else {
-            // Print error if something goes wrong
-            return array('Error: %s.\n', $stmt->error);
-        }
+            return "Product deleted";
+        };
+
+        return 'Error ' + $stmt->error;
+    }
+
+    public function update(): array
+    {
+        return [];
     }
 
     /**
@@ -105,7 +164,7 @@ class Product extends CRUD
     /**
      * Set the value of sku
      *
-     * @return  self
+     * @return self
      */
     public function setSku($sku)
     {
@@ -125,7 +184,7 @@ class Product extends CRUD
     /**
      * Set the value of price
      *
-     * @return  self
+     * @return self
      */
     public function setPrice($price)
     {
@@ -145,7 +204,7 @@ class Product extends CRUD
     /**
      * Set the value of name
      *
-     * @return  self
+     * @return self
      */
     public function setName($name)
     {
@@ -165,11 +224,31 @@ class Product extends CRUD
     /**
      * Set the value of product_attribute
      *
-     * @return  self
+     * @return self
      */
     public function setProductAttribute($product_attribute)
     {
         $this->product_attribute = $product_attribute;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

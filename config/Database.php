@@ -5,6 +5,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__, "config.env");
 $dotenv->safeLoad();
 
 
+
 class Database
 {
     // DB Params
