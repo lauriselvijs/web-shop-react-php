@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "../styles/css/add-product.css";
 import InputErrMsg from "./InputErrMsg";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export class AddProduct extends Component {
   constructor(props) {
@@ -27,6 +29,7 @@ export class AddProduct extends Component {
 
     this.state = {
       error: false,
+      saved: false,
       SKU: "",
       name: "",
       price: "",
@@ -83,7 +86,7 @@ export class AddProduct extends Component {
     this.setState({ bookWeight: e.target.value });
   }
 
-  onSaveDvd(e) {
+  async onSaveDvd(e) {
     e.preventDefault();
 
     const emptyValueArray = [];
@@ -101,15 +104,27 @@ export class AddProduct extends Component {
 
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
-        this.setState({
-          productObj: {
-            SKU: this.state.SKU,
-            name: this.state.name,
-            price: this.state.price,
-            dvdSize: this.state.dvdSize,
+        try {
+          await axios.post(
+            "http://localhost/react-php-test/api/products/create.php",
+            {
+              id: this.state.SKU,
+              sku: this.state.SKU,
+              name: this.state.name,
+              price: this.state.price,
+              product_attribute: this.state.dvdSize,
+            }
+          );
+
+          this.setState({
+            errorMsg: "",
             error: false,
-          },
-        });
+            saved: true,
+          });
+        } catch (error) {
+          console.log(error);
+          return error;
+        }
       } else {
         this.setState({
           errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
@@ -127,7 +142,8 @@ export class AddProduct extends Component {
       });
     }
   }
-  onSaveFurniture(e) {
+
+  async onSaveFurniture(e) {
     e.preventDefault();
 
     const emptyValueArray = [];
@@ -144,22 +160,36 @@ export class AddProduct extends Component {
     typeof this.state.name !== "string" && correctDataType.push("name");
     isNaN(this.state.price) && correctDataType.push("price");
     isNaN(this.state.furnitureHeight) && correctDataType.push("height");
-    isNaN(this.state.furnitureLength) && correctDataType.push("length");
     isNaN(this.state.furnitureWidth) && correctDataType.push("width");
+    isNaN(this.state.furnitureLength) && correctDataType.push("length");
 
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
-        this.setState({
-          productObj: {
-            SKU: this.state.SKU,
-            name: this.state.name,
-            price: this.state.price,
-            furnitureHeight: this.state.furnitureHeight,
-            furnitureLength: this.state.furnitureLength,
-            furnitureWidth: this.state.furnitureWidth,
+        try {
+          await axios.post(
+            "http://localhost/react-php-test/api/products/create.php",
+            {
+              id: this.state.SKU,
+              sku: this.state.SKU,
+              name: this.state.name,
+              price: this.state.price,
+              product_attribute:
+                this.state.furnitureHeight +
+                "x" +
+                this.state.furnitureWidth +
+                "x" +
+                this.state.furnitureLength,
+            }
+          );
+          this.setState({
+            errorMsg: "",
             error: false,
-          },
-        });
+            saved: true,
+          });
+        } catch (error) {
+          console.log(error);
+          return error;
+        }
       } else {
         this.setState({
           errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
@@ -177,7 +207,8 @@ export class AddProduct extends Component {
       });
     }
   }
-  onSaveBook(e) {
+
+  async onSaveBook(e) {
     e.preventDefault();
 
     const emptyValueArray = [];
@@ -195,15 +226,26 @@ export class AddProduct extends Component {
 
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
-        this.setState({
-          productObj: {
-            SKU: this.state.SKU,
-            name: this.state.name,
-            price: this.state.price,
-            bookWeight: this.state.bookWeight,
+        try {
+          await axios.post(
+            "http://localhost/react-php-test/api/products/create.php",
+            {
+              id: this.state.SKU,
+              sku: this.state.SKU,
+              name: this.state.name,
+              price: this.state.price,
+              product_attribute: this.state.bookWeight,
+            }
+          );
+          this.setState({
+            errorMsg: "",
             error: false,
-          },
-        });
+            saved: true,
+          });
+        } catch (error) {
+          console.log(error);
+          return error;
+        }
       } else {
         this.setState({
           errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
@@ -223,7 +265,9 @@ export class AddProduct extends Component {
   }
 
   render() {
-    const { error, errorMsg, selectValue } = this.state;
+    const { error, errorMsg, selectValue, saved } = this.state;
+
+    if (saved) return <Navigate to="/" />;
 
     return (
       <>

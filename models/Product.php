@@ -2,6 +2,8 @@
 
 namespace react_php_test\models;
 
+use \PDO;
+
 require_once '../../models/CRUD.php';
 
 class Product extends CRUD
@@ -117,10 +119,10 @@ class Product extends CRUD
                     return array('Error: %s.\n', $stmt->error);
                 }
             } else {
-                return ['incorrect data' => $correct_data];
+                return ['incorrect_data' => $correct_data];
             }
         } else {
-            return ['empty data' => $data_missing];
+            return ['empty_data' => $data_missing];
         }
     }
 

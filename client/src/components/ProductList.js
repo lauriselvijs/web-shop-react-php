@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProductItem from "./ProductItem";
 import "../styles/css/product-list.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export class ProductList extends Component {
   constructor(props) {
@@ -9,66 +10,29 @@ export class ProductList extends Component {
 
     this.setIdArray = this.setIdArray.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 
     this.state = {
-      products: [
-        {
-          SKU: 1,
-          name: "Acme DVD",
-          price: "$6.50",
-          productSpecificAtr: "Size: 700 MB",
-        },
-        {
-          SKU: 2,
-          name: "War and Peace",
-          price: "$6.50",
-          productSpecificAtr: "Weight: 2KG",
-        },
-        {
-          SKU: 3,
-          name: "Chair",
-          price: "$6.50",
-          productSpecificAtr: "Dimension: 12x24x45",
-        },
-        {
-          SKU: 4,
-          name: "Acme DVD",
-          price: "$6.50",
-          productSpecificAtr: "Size: 700 MB",
-        },
-        {
-          SKU: 5,
-          name: "War and Peace",
-          price: "$6.50",
-          productSpecificAtr: "Weight: 2KG",
-        },
-        {
-          SKU: 6,
-          name: "Chair",
-          price: "$6.50",
-          productSpecificAtr: "Dimension: 12x24x45",
-        },
-        {
-          SKU: 7,
-          name: "Acme DVD",
-          price: "$6.50",
-          productSpecificAtr: "Size: 700 MB",
-        },
-        {
-          SKU: 8,
-          name: "War and Peace",
-          price: "$6.50",
-          productSpecificAtr: "Weight: 2KG",
-        },
-        {
-          SKU: 9,
-          name: "Chair",
-          price: "$6.50",
-          productSpecificAtr: "Dimension: 12x24x45",
-        },
-      ],
+      products: [],
       idArray: [],
+      checkedItem: true,
     };
+  }
+
+  async componentDidMount() {
+    try {
+      const productData = await axios.get(
+        "http://localhost/react-php-test/api/products/read.php"
+      );
+
+      this.setState({
+        products: [...this.state.products, ...productData.data.data],
+      });
+    } catch (error) {
+      console.log(error);
+
+      return error;
+    }
   }
 
   setIdArray(id) {
@@ -76,8 +40,27 @@ export class ProductList extends Component {
   }
 
   onDelete() {
-    console.log("delete", this.state.idArray);
+    this.state.idArray.map(async (id) => {
+      try {
+        await axios.delete(
+          "http://localhost/react-php-test/api/products/delete.php",
+          { data: { id } }
+        );
+
+        this.setState({
+          products: this.state.products.filter(
+            (products) => products.id !== id
+          ),
+          checkedItem: (this.state.checkedItem = false),
+        });
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+    });
   }
+
+  handleCheckboxChange() {}
 
   render() {
     const { products } = this.state;
@@ -99,11 +82,11 @@ export class ProductList extends Component {
         </header>
         <hr className="line-break-header" />
         <div className="grid-container">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <ProductItem
-              key={product.SKU}
+              key={index}
               product={product}
-              onDelete={this.setIdArray.bind(this, product.SKU)}
+              onDelete={this.setIdArray.bind(this, product.id)}
             />
           ))}
         </div>
