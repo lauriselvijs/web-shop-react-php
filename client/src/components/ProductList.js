@@ -10,12 +10,10 @@ export class ProductList extends Component {
 
     this.setIdArray = this.setIdArray.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 
     this.state = {
       products: [],
       idArray: [],
-      checkedItem: true,
     };
   }
 
@@ -51,7 +49,6 @@ export class ProductList extends Component {
           products: this.state.products.filter(
             (products) => products.id !== id
           ),
-          checkedItem: (this.state.checkedItem = false),
         });
       } catch (error) {
         console.log(error);
@@ -59,8 +56,6 @@ export class ProductList extends Component {
       }
     });
   }
-
-  handleCheckboxChange() {}
 
   render() {
     const { products } = this.state;

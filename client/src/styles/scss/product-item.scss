@@ -1,0 +1,26 @@
+@use "colors";
+@use "text";
+
+.product-item {
+  position: relative;
+  font-family: text.$font-family-paragraph;
+  font-size: text.$font-size-paragraph;
+  line-height: text.$line-height-paragraph;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: 2px solid colors.$primary-color;
+  background-color: colors.$neutral-color;
+  color: colors.$primary-color;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 20px;
+}
+
+.delete-checkbox {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}

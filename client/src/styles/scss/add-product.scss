@@ -1,0 +1,107 @@
+@use "colors";
+@use "text";
+
+.line-break-header {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+}
+
+.product-add-header {
+  width: 100%;
+  padding-left: 30px;
+}
+
+.heading-product-add {
+  font-family: text.$font-family-heading;
+  font-size: text.$font-family-heading;
+  line-height: text.$font-family-heading;
+  color: colors.$primary-color;
+  display: inline-block;
+  padding-right: 65%;
+}
+
+.save-btn,
+.cancel-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  margin: 3px;
+  background-color: colors.$neutral-color;
+  color: colors.$primary-color;
+  font-family: text.$font-family-paragraph;
+  font-size: text.$font-size-paragraph;
+  line-height: text.$line-height-paragraph;
+  border: 1px solid;
+  box-shadow: 2px 4px;
+}
+
+.save-btn:active {
+  background-color: colors.$accept;
+  color: colors.$primary-color;
+  transform: translateY(2px);
+  transform: translateX(2px);
+}
+
+.cancel-btn:active {
+  background-color: colors.$warning;
+  color: colors.$neutral-color;
+  transform: translateY(2px);
+  transform: translateX(2px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid colors.$primary-color;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  font-family: text.$font-family-paragraph;
+  font-size: text.$font-size-paragraph;
+  line-height: text.$line-height-paragraph;
+  color: colors.$primary-color;
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.container {
+  margin-left: 20px;
+  padding: 20px;
+  max-width: 40%;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25,
+  .col-75 {
+    width: 100%;
+    margin-top: 0;
+  }
+}

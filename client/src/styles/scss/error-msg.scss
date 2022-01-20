@@ -1,0 +1,10 @@
+@use "colors";
+@use "text";
+
+.error-msg {
+  font-family: text.$font-family-paragraph;
+  font-size: text.$font-size-paragraph;
+  line-height: text.$line-height-paragraph;
+  color: colors.$secondary-color;
+  margin: 10px;
+}
