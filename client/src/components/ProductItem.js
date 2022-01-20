@@ -29,7 +29,7 @@ export class ProductItem extends Component {
 
   render() {
     const {
-      product: { sku, name, price, product_attribute },
+      product: { sku, name, price, product_attribute, type },
       onDelete,
     } = this.props;
 
@@ -43,9 +43,11 @@ export class ProductItem extends Component {
         <div>{name}</div>
         <div>{price} $</div>
         <div>
-          {sku.indexOf("JVC") === 0 && <>Size: {product_attribute} MB</>}
-          {sku.indexOf("GGW") === 0 && <>Weight: {product_attribute} KG</>}
-          {sku.indexOf("TRI") === 0 && <>Dimension: {product_attribute}</>}
+          {type.toLowerCase() === "dvd" && <>Size: {product_attribute} MB</>}
+          {type.toLowerCase() === "book" && <>Weight: {product_attribute} KG</>}
+          {type.toLowerCase() === "furniture" && (
+            <>Dimension: {product_attribute}</>
+          )}
         </div>
         <input
           type="checkbox"

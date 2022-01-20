@@ -17,6 +17,7 @@ class Product extends CRUD
     public $name;
     public $price;
     public $product_attribute;
+    public $type;
 
     public function read(): array
     {
@@ -29,7 +30,8 @@ class Product extends CRUD
        sku,
        name,
        price,
-       product_attribute
+       product_attribute,
+       type
        FROM 
        ' . $this->table . '   
        ORDER BY id DESC';
@@ -56,6 +58,7 @@ class Product extends CRUD
                     'name' => $name,
                     'price' => $price,
                     'product_attribute' => $product_attribute,
+                    'type' => $type,
                 );
 
                 // Push to 'data'
@@ -83,6 +86,7 @@ class Product extends CRUD
         $this->name === "" && $data_missing[] = 'name';
         $this->price === "" && $data_missing[] = 'price';
         $this->product_attribute === "" && $data_missing[] = 'product_attribute';
+        $this->type === "" && $data_missing[] = 'type';
 
         // Clean data
         $product_attr_number = str_replace(array('X', 'x'), '', $this->product_attribute);
@@ -95,7 +99,7 @@ class Product extends CRUD
             if (empty($correct_data)) {
                 // Create query
                 $query = 'INSERT INTO ' . $this->table . '
-                     SET sku = :sku, name =  :name, price = :price, product_attribute = :product_attribute';
+                     SET sku = :sku, name =  :name, price = :price, product_attribute = :product_attribute, type = :type';
 
                 // Prepare statement
                 $stmt = $this->conn->prepare($query);
@@ -105,12 +109,14 @@ class Product extends CRUD
                 $this->name = htmlspecialchars(strip_tags($this->name));
                 $this->price = htmlspecialchars(strip_tags($this->price));
                 $this->product_attribute = htmlspecialchars(strip_tags($this->product_attribute));
+                $this->type = htmlspecialchars(strip_tags($this->type));
 
                 // Bind data
                 $stmt->bindParam(':sku', $this->sku);
                 $stmt->bindParam(':name', $this->name);
                 $stmt->bindParam(':price', $this->price);
                 $stmt->bindParam(':product_attribute', $this->product_attribute);
+                $stmt->bindParam(':type', $this->type);
 
                 if ($stmt->execute()) {
                     return array('message' => 'Product Created');
@@ -251,6 +257,26 @@ class Product extends CRUD
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @return  self
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }

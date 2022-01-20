@@ -25,6 +25,7 @@ $product->setSku($data->sku);
 $product->setName($data->name);
 $product->setPrice($data->price);
 $product->setProductAttribute($data->product_attribute);
+$product->setType($data->type);
 
 // Return create product info msg
 echo json_encode($product->create());

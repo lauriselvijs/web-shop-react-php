@@ -113,6 +113,7 @@ export class AddProduct extends Component {
               name: this.state.name,
               price: this.state.price,
               product_attribute: this.state.dvdSize,
+              type: this.state.selectValue,
             }
           );
 
@@ -179,6 +180,7 @@ export class AddProduct extends Component {
                 this.state.furnitureWidth +
                 "x" +
                 this.state.furnitureLength,
+              type: this.state.selectValue,
             }
           );
           this.setState({
@@ -235,6 +237,7 @@ export class AddProduct extends Component {
               name: this.state.name,
               price: this.state.price,
               product_attribute: this.state.bookWeight,
+              type: this.state.selectValue,
             }
           );
           this.setState({
@@ -391,7 +394,7 @@ export class AddProduct extends Component {
                   <div className="col-75">
                     <input
                       type="text"
-                      id="dvd-size"
+                      id="size"
                       placeholder="DVD Size"
                       value={this.state.dvdSize}
                       onChange={this.onDvdSizeChange}
@@ -471,7 +474,7 @@ export class AddProduct extends Component {
                   <div className="col-75">
                     <input
                       type="text"
-                      id="book-weight"
+                      id="weight"
                       placeholder="Weight"
                       value={this.state.bookWeight}
                       onChange={this.onBookWeightSizeChange}
