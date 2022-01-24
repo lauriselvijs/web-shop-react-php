@@ -8,12 +8,9 @@ export class ProductList extends Component {
     super(props);
 
     this.onDelete = this.onDelete.bind(this);
-    this.onChecked = this.onChecked.bind(this);
-    this.checkRef = React.createRef();
 
     this.state = {
       products: [],
-      idArray: [],
     };
   }
 
@@ -39,7 +36,6 @@ export class ProductList extends Component {
     let checkboxArray = [];
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].checked === true) {
-        console.log(checkboxes[i].name);
         checkboxArray.push(checkboxes[i].name);
       }
     }
@@ -51,29 +47,15 @@ export class ProductList extends Component {
           { data: { id } }
         );
         window.location.reload();
-        // this.setState({
-        //   products: this.state.products.filter(
-        //     (products) => products.id !== id
-        //   ),
-        // });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         return error;
       }
     });
   }
 
-  onChecked(id, event) {
-    //console.log(event.target.checked, event.target.name);
-    // this.setState({
-    //  idArray: [...this.state.idArray, event.target.name],
-    // });
-  }
-
   render() {
-    const { products, idArray } = this.state;
-
-    console.log(idArray);
+    const { products } = this.state;
 
     return (
       <>
@@ -112,7 +94,6 @@ export class ProductList extends Component {
                 type="checkbox"
                 name={product.id}
                 className="delete-checkbox"
-                onChange={this.onChecked.bind(this, product.id)}
               />
             </div>
           ))}
