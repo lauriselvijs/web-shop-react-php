@@ -49,6 +49,7 @@
         "@wdio/spec-reporter": "^7.16.13",
         "chromedriver": "^97.0.0",
         "mini-css-extract-plugin": "2.4.5",
+        "sass": "^1.49.9",
         "wdio-chromedriver-service": "^7.2.6"
     }
 }

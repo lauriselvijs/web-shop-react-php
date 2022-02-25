@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import ProductList from "./components/ProductList";
-import AddProduct from "./components/AddProduct";
+import ProductList from "./routes/ProductList";
+import AddProduct from "./routes/AddProduct";
 import Footer from "./components/Footer";
 import "./App.css";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export class App extends Component {
   render() {

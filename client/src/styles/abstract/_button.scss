@@ -1,0 +1,12 @@
+@mixin button {
+  display: inline-block;
+  padding: 8px 20px;
+  margin: 3px;
+  background-color: $neutral-color;
+  color: $primary-color;
+  border: 1px solid;
+  box-shadow: 2px 4px;
+  font-family: $font-family-paragraph;
+  font-size: $font-size-paragraph;
+  line-height: $line-height-paragraph;
+}

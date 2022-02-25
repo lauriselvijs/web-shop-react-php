@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../styles/css/error-msg.css";
+import "./InputErrMsg.style.scss";
 import PropTypes from "prop-types";
 
 export class InputErrMsg extends Component {

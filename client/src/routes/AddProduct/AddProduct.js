@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "../styles/css/add-product.css";
-import InputErrMsg from "./InputErrMsg";
+import "./AddProduct.style.scss";
+import InputErrMsg from "../../components/inputErrMsg/InputErrMsg.component";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Navigate } from "react-router-dom";

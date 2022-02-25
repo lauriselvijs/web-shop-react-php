@@ -1,5 +1,4 @@
-@use "colors";
-@use "text";
+@import "../../styles/main.scss";
 
 .line-break-header {
   margin-left: 50px;
@@ -13,10 +12,10 @@
 }
 
 .heading-product-add {
-  font-family: text.$font-family-heading;
-  font-size: text.$font-family-heading;
-  line-height: text.$font-family-heading;
-  color: colors.$primary-color;
+  font-family: $font-family-heading;
+  font-size: $font-family-heading;
+  line-height: $font-family-heading;
+  color: $primary-color;
   display: inline-block;
   padding-right: 65%;
 }
@@ -26,25 +25,25 @@
   display: inline-block;
   padding: 8px 20px;
   margin: 3px;
-  background-color: colors.$neutral-color;
-  color: colors.$primary-color;
-  font-family: text.$font-family-paragraph;
-  font-size: text.$font-size-paragraph;
-  line-height: text.$line-height-paragraph;
+  background-color: $neutral-color;
+  color: $primary-color;
+  font-family: $font-family-paragraph;
+  font-size: $font-size-paragraph;
+  line-height: $line-height-paragraph;
   border: 1px solid;
   box-shadow: 2px 4px;
 }
 
 .save-btn:active {
-  background-color: colors.$accept;
-  color: colors.$primary-color;
+  background-color: $accept;
+  color: $primary-color;
   transform: translateY(2px);
   transform: translateX(2px);
 }
 
 .cancel-btn:active {
-  background-color: colors.$warning;
-  color: colors.$neutral-color;
+  background-color: $warning;
+  color: $neutral-color;
   transform: translateY(2px);
   transform: translateX(2px);
 }
@@ -58,16 +57,16 @@ input[type="number"],
 select {
   width: 100%;
   padding: 12px;
-  border: 1px solid colors.$primary-color;
+  border: 1px solid $primary-color;
   border-radius: 4px;
   resize: vertical;
 }
 
 label {
-  font-family: text.$font-family-paragraph;
-  font-size: text.$font-size-paragraph;
-  line-height: text.$line-height-paragraph;
-  color: colors.$primary-color;
+  font-family: $font-family-paragraph;
+  font-size: $font-size-paragraph;
+  line-height: $line-height-paragraph;
+  color: $primary-color;
   padding: 12px 12px 12px 0;
   display: inline-block;
 }
