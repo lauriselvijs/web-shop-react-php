@@ -4,7 +4,16 @@ import PropTypes from "prop-types";
 import axios from "axios";
 
 export class DeleteBtn extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onDelete = this.onDelete.bind(this);
+  }
+
   onDelete() {
+    const location = window.location.hostname;
+    const protocol = window.location.protocol;
+
     const checkboxes = document.getElementsByClassName("delete-checkbox");
     let checkboxArray = [];
     for (let i = 0; i < checkboxes.length; i++) {
@@ -15,8 +24,8 @@ export class DeleteBtn extends Component {
 
     checkboxArray.map(async (id) => {
       try {
-        await axios.delete("http://localhost/public/products/", {
-          data: { id },
+        await axios.delete(`http://${location}/products/public/`, {
+          params: { product_id: id },
         });
         window.location.reload();
       } catch (error) {
@@ -26,13 +35,11 @@ export class DeleteBtn extends Component {
   }
 
   render() {
-    const { onDelete } = this.props;
-
     return (
       <button
         id="delete-product-btn"
         className="mass-delete-btn"
-        onClick={onDelete}
+        onClick={this.onDelete}
       >
         MASS DELETE
       </button>

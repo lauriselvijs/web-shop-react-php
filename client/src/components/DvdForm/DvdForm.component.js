@@ -6,8 +6,6 @@ export class DvdForm extends Component {
   render() {
     const { dvdSize, onDvdSizeChange } = this.props;
 
-    console.log(dvdSize);
-
     return (
       <div className="row">
         <div className="col-25">

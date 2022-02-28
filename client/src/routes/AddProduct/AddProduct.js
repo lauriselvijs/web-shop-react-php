@@ -166,8 +166,10 @@ export class AddProduct extends Component {
 
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
+        const location = window.location.hostname;
+
         try {
-          await axios.delete("http://localhost/public/products/", {
+          await axios.post(`http://${location}/public/products/`, {
             id: this.state.SKU,
             sku: this.state.SKU,
             name: this.state.name,

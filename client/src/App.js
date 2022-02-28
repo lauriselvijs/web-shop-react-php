@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProductList from "./routes/ProductList";
 import AddProduct from "./routes/AddProduct";
 import Footer from "./components/Footer";
-import "./App.css";
+import "./App.scss";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export class App extends Component {
@@ -12,7 +12,7 @@ export class App extends Component {
         <Router>
           <Routes>
             <Route path="/" element={<ProductList />}></Route>
-            <Route path="/addproduct" element={<AddProduct />}></Route>
+            <Route path="/add-product" element={<AddProduct />}></Route>
           </Routes>
           <Footer />
         </Router>

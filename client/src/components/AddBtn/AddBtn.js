@@ -6,7 +6,7 @@ export class AddBtn extends Component {
   render() {
     return (
       <>
-        <Link to={"/addproduct"}>
+        <Link to={"/add-product"}>
           <button className="add-item-btn">ADD</button>
         </Link>
       </>

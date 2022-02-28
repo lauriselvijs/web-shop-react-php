@@ -14,8 +14,13 @@ export class Title extends Component {
   }
 
   async componentDidMount() {
+    const location = window.location.hostname;
+    const protocol = window.location.protocol;
+
     try {
-      const productData = await axios.get("http://localhost/products/public/");
+      const productData = await axios.get(
+        `${protocol}//${location}/products/public/`
+      );
 
       this.setState({
         products: [...this.state.products, ...productData.data],
