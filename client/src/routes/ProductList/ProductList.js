@@ -18,7 +18,6 @@ export class ProductList extends Component {
         </Header>
         <LineBreak />
         <ProductContainer />
-        <LineBreak />
       </>
     );
   }

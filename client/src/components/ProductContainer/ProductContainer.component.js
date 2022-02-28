@@ -31,7 +31,7 @@ export class Title extends Component {
     const { products } = this.state;
 
     return (
-      <section className="grid-container">
+      <section className="product-view-grid-container">
         {products.map((product, index) => (
           <Product product={product} key={index} />
         ))}

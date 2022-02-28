@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import "./AddProduct.style.scss";
-import InputErrMsg from "../../components/inputErrMsg/InputErrMsg.component";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import InputErrMsg from "../../components/inputErrMsg";
 import { Navigate } from "react-router-dom";
+import axios from "axios";
+import CancelBtn from "../../components/CancelBtn";
+import Title from "../../components/TItle";
+import SaveBtn from "../../components/SaveBtn";
+import Header from "../../components/Header";
+import LineBreak from "../../components/LineBreak";
+import BookForm from "../../components/BookForm";
+import DvdForm from "../../components/DvdForm";
+import FurnitureForm from "../../components/FurnitureForm";
 
 export class AddProduct extends Component {
   constructor(props) {
     super(props);
 
-    this.onSaveDvd = this.onSaveDvd.bind(this);
-    this.onSaveFurniture = this.onSaveFurniture.bind(this);
-    this.onSaveBook = this.onSaveBook.bind(this);
+    this.onSave = this.onSave.bind(this);
 
     this.onSKUChange = this.onSKUChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
@@ -86,160 +91,91 @@ export class AddProduct extends Component {
     this.setState({ bookWeight: e.target.value });
   }
 
-  async onSaveDvd(e) {
+  async onSave(e) {
     e.preventDefault();
 
-    const emptyValueArray = [];
-    const correctDataType = [];
+    const {
+      selectValue,
+      SKU,
+      name,
+      price,
+      dvdSize,
+      bookWeight,
+      furnitureHeight,
+      furnitureLength,
+      furnitureWidth,
+    } = this.state;
 
-    this.state.SKU === "" && emptyValueArray.push("SKU");
-    this.state.name === "" && emptyValueArray.push("name");
-    this.state.price === "" && emptyValueArray.push("price");
-    this.state.dvdSize === "" && emptyValueArray.push("dvd size");
+    let emptyValueArray = [];
+    let correctDataType = [];
+    let productAttribute = [];
 
-    typeof this.state.SKU !== "string" && correctDataType.push("SKU");
-    typeof this.state.name !== "string" && correctDataType.push("name");
-    isNaN(this.state.price) && correctDataType.push("price");
-    isNaN(this.state.dvdSize) && correctDataType.push("dvd size");
+    let productObj = {
+      SKU,
+      name,
+      price,
+    };
 
-    if (emptyValueArray.length === 0) {
-      if (correctDataType.length === 0) {
-        try {
-          await axios.post(
-            "http://localhost/react-php-test/api/products/create.php",
-            {
-              id: this.state.SKU,
-              sku: this.state.SKU,
-              name: this.state.name,
-              price: this.state.price,
-              product_attribute: this.state.dvdSize,
-              type: this.state.selectValue,
-            }
-          );
+    emptyValueArray = Object.keys(productObj).filter(
+      (key) => productObj[key] === ""
+    );
 
-          this.setState({
-            errorMsg: "",
-            error: false,
-            saved: true,
-          });
-        } catch (error) {
-          console.log(error);
-          return error;
-        }
+    if (selectValue === "DVD") {
+      if (!dvdSize) {
+        emptyValueArray = [...emptyValueArray, "size"];
       } else {
-        this.setState({
-          errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
-            (value) => " " + value
-          )}`,
-          error: true,
-        });
+        productAttribute = [...productAttribute, dvdSize];
       }
-    } else {
-      this.setState({
-        errorMsg: `Please, submit required data ${emptyValueArray.map(
-          (value) => " " + value
-        )}`,
-        error: true,
-      });
+
+      isNaN(dvdSize) && correctDataType.push("size");
     }
-  }
 
-  async onSaveFurniture(e) {
-    e.preventDefault();
-
-    const emptyValueArray = [];
-    const correctDataType = [];
-
-    this.state.SKU === "" && emptyValueArray.push("SKU");
-    this.state.name === "" && emptyValueArray.push("name");
-    this.state.price === "" && emptyValueArray.push("price");
-    this.state.furnitureHeight === "" && emptyValueArray.push("height");
-    this.state.furnitureLength === "" && emptyValueArray.push("length");
-    this.state.furnitureWidth === "" && emptyValueArray.push("width");
-
-    typeof this.state.SKU !== "string" && correctDataType.push("SKU");
-    typeof this.state.name !== "string" && correctDataType.push("name");
-    isNaN(this.state.price) && correctDataType.push("price");
-    isNaN(this.state.furnitureHeight) && correctDataType.push("height");
-    isNaN(this.state.furnitureWidth) && correctDataType.push("width");
-    isNaN(this.state.furnitureLength) && correctDataType.push("length");
-
-    if (emptyValueArray.length === 0) {
-      if (correctDataType.length === 0) {
-        try {
-          await axios.post(
-            "http://localhost/react-php-test/api/products/create.php",
-            {
-              id: this.state.SKU,
-              sku: this.state.SKU,
-              name: this.state.name,
-              price: this.state.price,
-              product_attribute:
-                this.state.furnitureHeight +
-                "x" +
-                this.state.furnitureWidth +
-                "x" +
-                this.state.furnitureLength,
-              type: this.state.selectValue,
-            }
-          );
-          this.setState({
-            errorMsg: "",
-            error: false,
-            saved: true,
-          });
-        } catch (error) {
-          console.log(error);
-          return error;
-        }
+    if (selectValue === "Book") {
+      if (!bookWeight) {
+        emptyValueArray = [...emptyValueArray, "weight"];
       } else {
-        this.setState({
-          errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
-            (value) => " " + value
-          )}`,
-          error: true,
-        });
+        productAttribute = [...productAttribute, bookWeight];
       }
-    } else {
-      this.setState({
-        errorMsg: `Please, submit required data ${emptyValueArray.map(
-          (value) => " " + value
-        )}`,
-        error: true,
-      });
+
+      isNaN(this.state.bookWeight) && correctDataType.push("book weight");
     }
-  }
 
-  async onSaveBook(e) {
-    e.preventDefault();
+    if (selectValue === "Furniture") {
+      if (!furnitureHeight) {
+        emptyValueArray = [...emptyValueArray, "height"];
+      } else {
+        productAttribute = [...productAttribute, furnitureHeight];
+      }
 
-    const emptyValueArray = [];
-    const correctDataType = [];
+      if (!furnitureLength) {
+        emptyValueArray = [...emptyValueArray, "length"];
+      } else {
+        productAttribute = [...productAttribute, furnitureLength];
+      }
 
-    this.state.SKU === "" && emptyValueArray.push("SKU");
-    this.state.name === "" && emptyValueArray.push("name");
-    this.state.price === "" && emptyValueArray.push("price");
-    this.state.bookWeight === "" && emptyValueArray.push("book weight");
+      if (!furnitureWidth) {
+        emptyValueArray = [...emptyValueArray, "width"];
+      } else {
+        productAttribute = [...productAttribute, furnitureWidth];
+      }
 
-    typeof this.state.SKU !== "string" && correctDataType.push("SKU");
-    typeof this.state.name !== "string" && correctDataType.push("name");
-    isNaN(this.state.price) && correctDataType.push("price");
-    isNaN(this.state.bookWeight) && correctDataType.push("book weight");
+      isNaN(furnitureHeight) && correctDataType.push("height");
+      isNaN(furnitureWidth) && correctDataType.push("width");
+      isNaN(furnitureLength) && correctDataType.push("length");
+    }
 
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
         try {
-          await axios.post(
-            "http://localhost/react-php-test/api/products/create.php",
-            {
-              id: this.state.SKU,
-              sku: this.state.SKU,
-              name: this.state.name,
-              price: this.state.price,
-              product_attribute: this.state.bookWeight,
-              type: this.state.selectValue,
-            }
-          );
+          await axios.delete("http://localhost/public/products/", {
+            id: this.state.SKU,
+            sku: this.state.SKU,
+            name: this.state.name,
+            price: this.state.price,
+            product_attribute: productAttribute.join("x"),
+            type: this.state.selectValue,
+          });
+
           this.setState({
             errorMsg: "",
             error: false,
@@ -268,56 +204,32 @@ export class AddProduct extends Component {
   }
 
   render() {
-    const { error, errorMsg, selectValue, saved } = this.state;
+    const {
+      error,
+      errorMsg,
+      selectValue,
+      saved,
+      SKU,
+      price,
+      name,
+      dvdSize,
+      furnitureHeight,
+      furnitureLength,
+      furnitureWidth,
+      bookWeight,
+    } = this.state;
 
     if (saved) return <Navigate to="/" />;
 
     return (
       <>
-        <header className="product-add-header">
-          <h1 className="heading-product-add">Product Add</h1>
-          {selectValue === "DVD" && (
-            <>
-              <button
-                type="submit"
-                form="product_form"
-                onClick={this.onSaveDvd}
-                className="save-btn"
-              >
-                Save
-              </button>
-            </>
-          )}
-          {selectValue === "Furniture" && (
-            <>
-              <button
-                type="submit"
-                form="product_form"
-                onClick={this.onSaveFurniture}
-                className="save-btn"
-              >
-                Save
-              </button>
-            </>
-          )}
-          {selectValue === "Book" && (
-            <>
-              <button
-                type="submit"
-                form="product_form"
-                onClick={this.onSaveBook}
-                className="save-btn"
-              >
-                Save
-              </button>
-            </>
-          )}
+        <Header>
+          <Title pageTitle="Product Add" />
+          <SaveBtn onSave={this.onSave} />
+          <CancelBtn />
+        </Header>
 
-          <Link to={"/"}>
-            <button className="cancel-btn">Cancel</button>
-          </Link>
-        </header>
-        <hr className="line-break-header" />
+        <LineBreak />
         <div className="container">
           <form id="product_form">
             <div className="row">
@@ -329,7 +241,7 @@ export class AddProduct extends Component {
                   type="text"
                   id="sku"
                   placeholder="Enter name SKU"
-                  value={this.state.SKU}
+                  value={SKU}
                   onChange={this.onSKUChange}
                 />
               </div>
@@ -343,7 +255,7 @@ export class AddProduct extends Component {
                   type="text"
                   id="name"
                   placeholder="Enter product name"
-                  value={this.state.name}
+                  value={name}
                   onChange={this.onNameChange}
                 />
               </div>
@@ -357,7 +269,7 @@ export class AddProduct extends Component {
                   type="text"
                   id="price"
                   placeholder="Enter product price"
-                  value={this.state.price}
+                  value={price}
                   onChange={this.onPriceChange}
                 />
               </div>
@@ -369,7 +281,7 @@ export class AddProduct extends Component {
               <div className="col-75">
                 <select
                   id="productType"
-                  defaultValue={this.state.selectValue}
+                  defaultValue={selectValue}
                   onChange={this.onDropdownChange}
                 >
                   <option id="DVD" value="DVD">
@@ -387,103 +299,32 @@ export class AddProduct extends Component {
 
             {selectValue === "DVD" && (
               <>
-                <div className="row">
-                  <div className="col-25">
-                    <label htmlFor="dvd-size">Size (MB)</label>
-                  </div>
-                  <div className="col-75">
-                    <input
-                      type="text"
-                      id="size"
-                      placeholder="DVD Size"
-                      value={this.state.dvdSize}
-                      onChange={this.onDvdSizeChange}
-                    />
-                    <div style={{ padding: "10px", fontSize: "14px" }}>
-                      Please, provide size in MB
-                    </div>
-                  </div>
-                </div>
+                <DvdForm
+                  dvdSize={dvdSize}
+                  onDvdSizeChange={this.onDvdSizeChange}
+                />
               </>
             )}
 
             {selectValue === "Furniture" && (
               <>
-                <div className="row">
-                  <div className="col-25">
-                    <label htmlFor="height">Height (CM)</label>
-                  </div>
-                  <div className="col-75">
-                    <input
-                      type="text"
-                      id="height"
-                      placeholder="Height"
-                      value={this.state.furnitureHeight}
-                      onChange={this.onFurnitureHeightChange}
-                    />
-                    <div style={{ padding: "10px", fontSize: "14px" }}>
-                      Please, provide height in CM
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-25">
-                    <label htmlFor="width">Width (CM)</label>
-                  </div>
-                  <div className="col-75">
-                    <input
-                      type="text"
-                      id="width"
-                      placeholder="Width"
-                      value={this.state.furnitureWidth}
-                      onChange={this.onFurnitureWidthChange}
-                    />
-                    <div style={{ padding: "10px", fontSize: "14px" }}>
-                      Please, provide width in CM
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-25">
-                    <label htmlFor="length">Length (CM)</label>
-                  </div>
-                  <div className="col-75">
-                    <input
-                      type="text"
-                      id="length"
-                      placeholder="Length"
-                      value={this.state.furnitureLength}
-                      onChange={this.onFurnitureLengthChange}
-                    />
-                    <div style={{ padding: "10px", fontSize: "14px" }}>
-                      Please, provide length in CM
-                    </div>
-                  </div>
-                </div>
+                <FurnitureForm
+                  furnitureHeight={furnitureHeight}
+                  furnitureWidth={furnitureWidth}
+                  furnitureLength={furnitureLength}
+                  onFurnitureHeightChange={this.onFurnitureHeightChange}
+                  onFurnitureWidthChange={this.onFurnitureWidthChange}
+                  onFurnitureLengthChange={this.onFurnitureLengthChange}
+                />
               </>
             )}
 
             {selectValue === "Book" && (
               <>
-                <div className="row">
-                  <div className="col-25">
-                    <label htmlFor="book-weight">Weight (KG)</label>
-                  </div>
-                  <div className="col-75">
-                    <input
-                      type="text"
-                      id="weight"
-                      placeholder="Weight"
-                      value={this.state.bookWeight}
-                      onChange={this.onBookWeightSizeChange}
-                    />
-                    <div style={{ padding: "10px", fontSize: "14px" }}>
-                      Please, provide weight in KG
-                    </div>
-                  </div>
-                </div>
+                <BookForm
+                  bookWeight={bookWeight}
+                  onBookWeightSizeChange={this.onBookWeightSizeChange}
+                />
               </>
             )}
           </form>
