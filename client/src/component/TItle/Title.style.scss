@@ -1,0 +1,10 @@
+@import "../../style/main.scss";
+
+.heading-product-list {
+  display: inline-block;
+  padding-right: 60%;
+  font-family: $font-family-heading;
+  font-size: $font-family-heading;
+  line-height: $font-family-heading;
+  color: $primary-color;
+}

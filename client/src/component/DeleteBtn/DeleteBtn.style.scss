@@ -1,0 +1,12 @@
+@import "../../style/main.scss";
+
+.mass-delete-btn {
+  @include button;
+
+  &:active {
+    background-color: $warning;
+    color: $neutral-color;
+    transform: translateY(2px);
+    transform: translateX(2px);
+  }
+}

@@ -1,0 +1,9 @@
+@import "../../style/main.scss";
+
+.error-msg {
+  font-family: $font-family-paragraph;
+  font-size: $font-size-paragraph;
+  line-height: $line-height-paragraph;
+  color: $secondary-color;
+  margin: 10px;
+}

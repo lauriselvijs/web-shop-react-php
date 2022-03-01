@@ -1,0 +1,12 @@
+@import "../../style/main.scss";
+
+.save-btn {
+  @include button;
+
+  &:active {
+    background-color: $accept;
+    color: $neutral-color;
+    transform: translateY(2px);
+    transform: translateX(2px);
+  }
+}

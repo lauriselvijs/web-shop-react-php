@@ -170,7 +170,6 @@ export class AddProduct extends Component {
 
         try {
           await axios.post(`http://${location}/public/products/`, {
-            id: this.state.SKU,
             sku: this.state.SKU,
             name: this.state.name,
             price: this.state.price,

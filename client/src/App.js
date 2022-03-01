@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import ProductList from "./routes/ProductList";
-import AddProduct from "./routes/AddProduct";
-import Footer from "./components/Footer";
+import ProductList from "./route/ProductList";
+import AddProduct from "./route/AddProduct";
+import Footer from "./component/Footer";
 import "./App.scss";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 

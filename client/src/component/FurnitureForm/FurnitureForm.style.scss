@@ -1,0 +1,5 @@
+@import "../../style/main.scss";
+
+.product-attribute-info-msg {
+  @include errorMsg;
+}
