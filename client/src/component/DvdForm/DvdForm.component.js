@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "./DvdForm.style.scss";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import "./DvdForm.style.scss"
+import PropTypes from "prop-types"
 
 export class DvdForm extends Component {
-  render() {
-    const { dvdSize, onDvdSizeChange } = this.props;
+  render () {
+    const { dvdSize, onDvdSizeChange } = this.props
 
     return (
       <div className="row">
@@ -24,18 +24,18 @@ export class DvdForm extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 DvdForm.propTypes = {
   dvdSize: PropTypes.string,
-  onDvdSizeChange: PropTypes.func,
-};
+  onDvdSizeChange: PropTypes.func
+}
 
 DvdForm.defaultProps = {
   dvdSize: "100",
-  onDvdSizeChange: () => {},
-};
+  onDvdSizeChange: () => {}
+}
 
-export default DvdForm;
+export default DvdForm

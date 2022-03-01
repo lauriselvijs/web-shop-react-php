@@ -1,3 +1,3 @@
-import DvdForm from "./DvdForm.component";
+import DvdForm from "./DvdForm.component"
 
-export default DvdForm;
+export default DvdForm

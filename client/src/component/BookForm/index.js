@@ -1,3 +1,3 @@
-import BookForm from "./BookForm.component";
+import BookForm from "./BookForm.component"
 
-export default BookForm;
+export default BookForm

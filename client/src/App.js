@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import ProductList from "./route/ProductList";
-import AddProduct from "./route/AddProduct";
-import Footer from "./component/Footer";
-import "./App.scss";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import React, { Component } from "react"
+import ProductList from "./route/ProductList"
+import AddProduct from "./route/AddProduct"
+import Footer from "./component/Footer"
+import "./App.scss"
+import { HashRouter as Router, Route, Routes } from "react-router-dom"
 
 export class App extends Component {
-  render() {
+  render () {
     return (
       <div>
         <Router>
@@ -17,8 +17,8 @@ export class App extends Component {
           <Footer />
         </Router>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

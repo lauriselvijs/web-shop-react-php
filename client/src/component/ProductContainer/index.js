@@ -1,3 +1,3 @@
-import ProductContainer from "./ProductContainer.component";
+import ProductContainer from "./ProductContainer.component"
 
-export default ProductContainer;
+export default ProductContainer

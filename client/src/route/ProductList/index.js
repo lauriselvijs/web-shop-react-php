@@ -1,3 +1,3 @@
-import ProductList from "./ProductList.component";
+import ProductList from "./ProductList.component"
 
-export default ProductList;
+export default ProductList

@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import "./CancelBtn.style.scss";
-import { Link } from "react-router-dom";
+import React, { Component } from "react"
+import "./CancelBtn.style.scss"
+import { Link } from "react-router-dom"
 
 export class CancelBtn extends Component {
-  render() {
+  render () {
     return (
       <Link to={"/"}>
         <button className="cancel-btn">Cancel</button>
       </Link>
-    );
+    )
   }
 }
 
-export default CancelBtn;
+export default CancelBtn

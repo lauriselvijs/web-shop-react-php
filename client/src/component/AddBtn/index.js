@@ -1,3 +1,3 @@
-import AddBtn from "./AddBtn.component";
+import AddBtn from "./AddBtn.component"
 
-export default AddBtn;
+export default AddBtn

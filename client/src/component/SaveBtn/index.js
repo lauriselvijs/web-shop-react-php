@@ -1,3 +1,3 @@
-import SaveBtn from "./SaveBtn.component";
+import SaveBtn from "./SaveBtn.component"
 
-export default SaveBtn;
+export default SaveBtn

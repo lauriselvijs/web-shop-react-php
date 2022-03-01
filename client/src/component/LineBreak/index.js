@@ -1,3 +1,3 @@
-import LineBreak from "./LineBreak.component";
+import LineBreak from "./LineBreak.component"
 
-export default LineBreak;
+export default LineBreak

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "./BookForm.style.scss";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import "./BookForm.style.scss"
+import PropTypes from "prop-types"
 
 export class BookForm extends Component {
-  render() {
-    const { bookWeight, onBookWeightSizeChange } = this.props;
+  render () {
+    const { bookWeight, onBookWeightSizeChange } = this.props
 
     return (
       <div className="row">
@@ -24,18 +24,18 @@ export class BookForm extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 BookForm.propTypes = {
   bookWeight: PropTypes.string,
-  onBookWeightSizeChange: PropTypes.func,
-};
+  onBookWeightSizeChange: PropTypes.func
+}
 
 BookForm.defaultProps = {
   bookWeight: "100",
-  onBookWeightSizeChange: () => {},
-};
+  onBookWeightSizeChange: () => {}
+}
 
-export default BookForm;
+export default BookForm

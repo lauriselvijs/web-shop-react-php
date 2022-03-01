@@ -48,6 +48,12 @@
         "@wdio/mocha-framework": "^7.16.13",
         "@wdio/spec-reporter": "^7.16.13",
         "chromedriver": "^97.0.0",
+        "eslint": "^7.32.0",
+        "eslint-config-standard": "^16.0.3",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^5.2.0",
+        "eslint-plugin-react": "^7.29.2",
         "mini-css-extract-plugin": "2.4.5",
         "sass": "^1.49.9",
         "wdio-chromedriver-service": "^7.2.6"

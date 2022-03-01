@@ -1,3 +1,3 @@
-import InputErrMsg from "./InputErrMsg.component";
+import InputErrMsg from "./InputErrMsg.component"
 
-export default InputErrMsg;
+export default InputErrMsg

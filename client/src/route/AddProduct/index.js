@@ -1,3 +1,3 @@
-import AddProduct from "./AddProduct.component";
+import AddProduct from "./AddProduct.component"
 
-export default AddProduct;
+export default AddProduct

@@ -1,3 +1,3 @@
-import Title from "./Title.component";
+import Title from "./Title.component"
 
-export default Title;
+export default Title

@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import "./FurnitureForm.style.scss";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import "./FurnitureForm.style.scss"
+import PropTypes from "prop-types"
 
 export class FurnitureForm extends Component {
-  render() {
+  render () {
     const {
       furnitureHeight,
       furnitureWidth,
       furnitureLength,
       onFurnitureHeightChange,
       onFurnitureWidthChange,
-      onFurnitureLengthChange,
-    } = this.props;
+      onFurnitureLengthChange
+    } = this.props
 
     return (
       <>
@@ -69,7 +69,7 @@ export class FurnitureForm extends Component {
           </div>
         </div>
       </>
-    );
+    )
   }
 }
 
@@ -79,8 +79,8 @@ FurnitureForm.propTypes = {
   furnitureLength: PropTypes.string,
   onFurnitureHeightChange: PropTypes.func,
   onFurnitureWidthChange: PropTypes.func,
-  onFurnitureLengthChange: PropTypes.func,
-};
+  onFurnitureLengthChange: PropTypes.func
+}
 
 FurnitureForm.defaultProps = {
   furnitureHeight: "200",
@@ -88,7 +88,7 @@ FurnitureForm.defaultProps = {
   furnitureLength: "200",
   onFurnitureHeightChange: () => {},
   onFurnitureWidthChange: () => {},
-  onFurnitureLengthChange: () => {},
-};
+  onFurnitureLengthChange: () => {}
+}
 
-export default FurnitureForm;
+export default FurnitureForm

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import "./Product.style.scss";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import "./Product.style.scss"
+import PropTypes from "prop-types"
 
 export class Product extends Component {
-  render() {
+  render () {
     const { id, sku, name, price, type, product_attribute } =
-      this.props.product;
+      this.props.product
 
     return (
       <div className="product-item">
@@ -21,7 +21,7 @@ export class Product extends Component {
         </div>
         <input type="checkbox" name={id} className="delete-checkbox" />
       </div>
-    );
+    )
   }
 }
 
@@ -32,9 +32,9 @@ Product.propTypes = {
     name: PropTypes.string,
     price: PropTypes.string,
     type: PropTypes.string,
-    product_attribute: PropTypes.string,
-  }),
-};
+    product_attribute: PropTypes.string
+  })
+}
 
 Product.defaultProps = {
   product: {
@@ -43,8 +43,8 @@ Product.defaultProps = {
     name: "NameTest000",
     price: "25.0",
     type: "DVD",
-    product_attribute: "200",
-  },
-};
+    product_attribute: "200"
+  }
+}
 
-export default Product;
+export default Product

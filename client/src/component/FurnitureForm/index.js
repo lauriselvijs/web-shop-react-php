@@ -1,3 +1,3 @@
-import FurnitureForm from "./FurnitureForm.component";
+import FurnitureForm from "./FurnitureForm.component"
 
-export default FurnitureForm;
+export default FurnitureForm

@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import "./ProductList.style.scss";
-import DeleteBtn from "../../component/DeleteBtn";
-import AddBtn from "../../component/AddBtn/AddBtn";
-import Title from "../../component/TItle";
-import Header from "../../component/Header/Header.component";
-import LineBreak from "../../component/LineBreak/LineBreak.component";
-import ProductContainer from "../../component/ProductContainer";
+import React, { Component } from "react"
+import "./ProductList.style.scss"
+import DeleteBtn from "../../component/DeleteBtn"
+import AddBtn from "../../component/AddBtn/AddBtn"
+import Title from "../../component/TItle"
+import Header from "../../component/Header/Header.component"
+import LineBreak from "../../component/LineBreak/LineBreak.component"
+import ProductContainer from "../../component/ProductContainer"
 
 export class ProductList extends Component {
-  render() {
+  render () {
     return (
       <>
         <Header>
@@ -19,8 +19,8 @@ export class ProductList extends Component {
         <LineBreak />
         <ProductContainer />
       </>
-    );
+    )
   }
 }
 
-export default ProductList;
+export default ProductList

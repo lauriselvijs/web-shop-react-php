@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import "./SaveBtn.style.scss";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import "./SaveBtn.style.scss"
 
 export class SaveBtn extends Component {
-  render() {
-    const { onSave } = this.props;
+  render () {
+    const { onSave } = this.props
 
     return (
       <button
@@ -15,16 +15,16 @@ export class SaveBtn extends Component {
       >
         Save
       </button>
-    );
+    )
   }
 }
 
 SaveBtn.propTypes = {
-  onSave: PropTypes.func,
-};
+  onSave: PropTypes.func
+}
 
 SaveBtn.defaultProps = {
-  onSave: () => {},
-};
+  onSave: () => {}
+}
 
-export default SaveBtn;
+export default SaveBtn

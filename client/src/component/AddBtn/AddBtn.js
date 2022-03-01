@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import "./AddBtn.style.scss";
-import { Link } from "react-router-dom";
+import React, { Component } from "react"
+import "./AddBtn.style.scss"
+import { Link } from "react-router-dom"
 
 export class AddBtn extends Component {
-  render() {
+  render () {
     return (
       <>
         <Link to={"/add-product"}>
           <button className="add-item-btn">ADD</button>
         </Link>
       </>
-    );
+    )
   }
 }
 
-export default AddBtn;
+export default AddBtn

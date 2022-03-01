@@ -1,3 +1,3 @@
-import CancelBtn from "./CancelBtn.component";
+import CancelBtn from "./CancelBtn.component"
 
-export default CancelBtn;
+export default CancelBtn
