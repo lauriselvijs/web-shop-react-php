@@ -94,7 +94,6 @@ export class AddProduct extends Component {
   async onSave(e) {
     e.preventDefault();
 
-    const location = window.location.hostname;
     const protocol = window.location.protocol;
 
     const {
@@ -172,7 +171,7 @@ export class AddProduct extends Component {
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
         try {
-          await axios.post(`${protocol}//${location}/products/public/`, {
+          await axios.post(`${protocol}//localhost/products/public/`, {
             sku: SKU,
             name: name,
             price: price,

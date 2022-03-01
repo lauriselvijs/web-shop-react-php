@@ -14,12 +14,11 @@ export class Title extends Component {
   }
 
   async componentDidMount() {
-    const location = window.location.hostname;
     const protocol = window.location.protocol;
 
     try {
       const productData = await axios.get(
-        `${protocol}//${location}/products/public/`
+        `${protocol}//localhost/products/public/`
       );
 
       this.setState({

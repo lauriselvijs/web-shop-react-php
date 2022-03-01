@@ -11,7 +11,6 @@ export class DeleteBtn extends Component {
   }
 
   onDelete() {
-    const location = window.location.hostname;
     const protocol = window.location.protocol;
 
     const checkboxes = document.getElementsByClassName("delete-checkbox");
@@ -24,7 +23,7 @@ export class DeleteBtn extends Component {
 
     checkboxArray.map(async (id) => {
       try {
-        await axios.delete(`${protocol}//${location}/products/public/`, {
+        await axios.delete(`${protocol}//localhost/products/public/`, {
           params: { product_id: id },
         });
         window.location.reload();

@@ -3,7 +3,7 @@ import ProductList from "./route/ProductList";
 import AddProduct from "./route/AddProduct";
 import Footer from "./component/Footer";
 import "./App.scss";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 export class App extends Component {
   render() {
