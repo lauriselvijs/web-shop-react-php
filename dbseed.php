@@ -3,18 +3,18 @@
 require 'bootstrap.php';
 
 $statement = <<<EOS
-    CREATE TABLE IF NOT EXISTS `products` (
-        `id` int unsigned NOT NULL AUTO_INCREMENT,
-        `sku` varchar(30) NOT NULL,
-        `name` varchar(30) NOT NULL,
-        `price` decimal(15,2) NOT NULL,
-        `product_attribute` varchar(30) NOT NULL,
-        `type` varchar(255) NOT NULL,
-        `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-        `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        PRIMARY KEY (`id`)
+    CREATE TABLE IF NOT EXISTS products (
+        id int unsigned NOT NULL AUTO_INCREMENT,
+        sku varchar(30) NOT NULL,
+        name varchar(30) NOT NULL,
+        price decimal(15,2) NOT NULL,
+        product_attribute varchar(30) NOT NULL,
+        type varchar(255) NOT NULL,
+        created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id)
     ) ENGINE=INNODB; 
-    INSERT INTO emails
+    INSERT INTO products
         (sku, name, price, product_attribute, type)
     VALUES
         ('SKUTest000','NameTest000',25.00,'200','DVD'),

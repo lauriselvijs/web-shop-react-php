@@ -34,9 +34,6 @@ if ($uri[1] !== 'products') {
 }
 
 $controller = new ProductController($dbConnection);
-
-$requestMethod = $_SERVER["REQUEST_METHOD"];
-
 $controller->setRequestMethod($requestMethod);
 
 if (isset($_GET['product_id'])) {
