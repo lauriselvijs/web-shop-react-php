@@ -89,8 +89,8 @@ class ProductController extends ProductGateway
 
     private function validateProduct($input)
     {
-        $nullValueArr = array_keys($array, null, true);
-        $emptyValueArr = array_keys($array, "", true);
+        $nullValueArr = array_keys($input, null, true);
+        $emptyValueArr = array_keys($input, "", true);
 
         if ($nullValueArr) {
             $this->setErrorMsg("Missing values found: " . implode(", ", $nullValueArr));
