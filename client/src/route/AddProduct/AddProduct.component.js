@@ -116,6 +116,9 @@ export class AddProduct extends Component {
       price,
     };
 
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+
     emptyValueArray = Object.keys(productObj).filter(
       (key) => productObj[key] === ""
     );
@@ -169,7 +172,7 @@ export class AddProduct extends Component {
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
         try {
-          await axios.post("http://localhost/products/public/", {
+          await axios.post(`${protocol}//${hostname}/products/public/`, {
             sku: SKU,
             name: name,
             price: price,
