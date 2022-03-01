@@ -94,6 +94,9 @@ export class AddProduct extends Component {
   async onSave(e) {
     e.preventDefault();
 
+    const location = window.location.hostname;
+    const protocol = window.location.protocol;
+
     const {
       selectValue,
       SKU,
@@ -120,6 +123,8 @@ export class AddProduct extends Component {
       (key) => productObj[key] === ""
     );
 
+    isNaN(price) && correctDataType.push("price");
+
     if (selectValue === "DVD") {
       if (!dvdSize) {
         emptyValueArray = [...emptyValueArray, "size"];
@@ -137,7 +142,7 @@ export class AddProduct extends Component {
         productAttribute = [...productAttribute, bookWeight];
       }
 
-      isNaN(this.state.bookWeight) && correctDataType.push("book weight");
+      isNaN(bookWeight) && correctDataType.push("weight");
     }
 
     if (selectValue === "Furniture") {
@@ -160,21 +165,19 @@ export class AddProduct extends Component {
       }
 
       isNaN(furnitureHeight) && correctDataType.push("height");
-      isNaN(furnitureWidth) && correctDataType.push("width");
       isNaN(furnitureLength) && correctDataType.push("length");
+      isNaN(furnitureWidth) && correctDataType.push("width");
     }
 
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
-        const location = window.location.hostname;
-
         try {
-          await axios.post(`http://${location}/public/products/`, {
-            sku: this.state.SKU,
-            name: this.state.name,
-            price: this.state.price,
+          await axios.post(`${protocol}//${location}/products/public/`, {
+            sku: SKU,
+            name: name,
+            price: price,
             product_attribute: productAttribute.join("x"),
-            type: this.state.selectValue,
+            type: selectValue,
           });
 
           this.setState({

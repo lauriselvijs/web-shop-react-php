@@ -24,7 +24,7 @@ export class DeleteBtn extends Component {
 
     checkboxArray.map(async (id) => {
       try {
-        await axios.delete(`http://${location}/products/public/`, {
+        await axios.delete(`${protocol}//${location}/products/public/`, {
           params: { product_id: id },
         });
         window.location.reload();
