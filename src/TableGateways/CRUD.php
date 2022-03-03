@@ -4,14 +4,8 @@ namespace Src\TableGateways;
 
 abstract class CRUD
 {
-    // db connection
-    public $db;
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
 
-    // Crud operations
+    // CRUD operations
     abstract public function read(): array;
     abstract public function insert(array $input): int;
     abstract public function delete(string $id): int;
