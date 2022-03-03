@@ -2,7 +2,10 @@
 
 namespace Src\TableGateways;
 
-class ProductGateway
+use Src\TableGateways\CRUD;
+
+
+class ProductGateway extends CRUD
 {
     private $db = null;
 
@@ -11,7 +14,7 @@ class ProductGateway
         $this->db = $db;
     }
 
-    public function read()
+    public function read(): array
     {
 
         $statement = '
@@ -38,7 +41,7 @@ class ProductGateway
 
 
 
-    public function insert(array $input)
+    public function insert(array $input): int
     {
         $statement = "
             INSERT INTO products 
@@ -67,7 +70,7 @@ class ProductGateway
     }
 
 
-    public function delete($id)
+    public function delete(string $id): int
     {
 
         $statement = '
@@ -86,7 +89,7 @@ class ProductGateway
         }
     }
 
-    public function find($id)
+    public function find(string $id): array
     {
         $statement = "
         SELECT 
