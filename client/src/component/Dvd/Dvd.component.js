@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import "./Product.style.scss"
-import PropTypes from "prop-types"
+import React, { Component } from "react";
+import "./Dvd.style.scss";
+import PropTypes from "prop-types";
 
-export class Product extends Component {
-  render () {
+export class Dvd extends Component {
+  render() {
     const { id, sku, name, price, type, product_attribute } =
-      this.props.product
+      this.props.product;
 
     return (
       <div className="product-item">
@@ -21,30 +21,30 @@ export class Product extends Component {
         </div>
         <input type="checkbox" name={id} className="delete-checkbox" />
       </div>
-    )
+    );
   }
 }
 
-Product.propTypes = {
+Dvd.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.string,
     sku: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.string,
     type: PropTypes.string,
-    product_attribute: PropTypes.string
-  })
-}
+    product_attribute: PropTypes.string,
+  }),
+};
 
-Product.defaultProps = {
+Dvd.defaultProps = {
   product: {
     id: "1",
     sku: "SKUTest000",
     name: "NameTest000",
     price: "25.0",
     type: "DVD",
-    product_attribute: "200"
-  }
-}
+    product_attribute: "200",
+  },
+};
 
-export default Product
+export default Dvd;
