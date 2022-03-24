@@ -4,10 +4,8 @@ namespace Src\TableGateways;
 
 use Src\TableGateways\ProductGateway;
 
-
 class DvdGateway extends ProductGateway
 {
-
     private $db = null;
 
     public function __construct($db)
@@ -30,7 +28,7 @@ class DvdGateway extends ProductGateway
             dvds 
         ORDER BY id DESC';
 
-        // size - int 
+        // size - int
 
         try {
             $statement = $this->db->prepare($statement);

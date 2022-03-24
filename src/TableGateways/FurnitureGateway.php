@@ -4,10 +4,8 @@ namespace Src\TableGateways;
 
 use Src\TableGateways\ProductGateway;
 
-
 class FurnitureGateway extends ProductGateway
 {
-
     private $db = null;
 
     public function __construct($db)

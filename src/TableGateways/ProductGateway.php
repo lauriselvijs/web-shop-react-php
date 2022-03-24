@@ -4,7 +4,6 @@ namespace Src\TableGateways;
 
 abstract class ProductGateway
 {
-
     // Crud operations
     abstract public function read(): array;
     abstract public function insert(array $input): int;
