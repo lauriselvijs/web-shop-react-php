@@ -2,12 +2,12 @@
 
 namespace Src\Controller;
 
-use Src\TableGateways\ProductGateway;
+use Src\TableGateways\FurnitureGateway;
 
-class ProductController extends ProductGateway
+class FurnitureController extends FurnitureGateway
 {
     private $requestMethod;
-    private $productId;
+    private $furnitureId;
 
     private $errorMsg;
 
@@ -16,17 +16,17 @@ class ProductController extends ProductGateway
     {
         switch ($this->getRequestMethod()) {
             case 'GET':
-                if ($this->getProductId()) {
-                    $response = $this->getProduct($this->getProductId());
+                if ($this->getFurnitureId()) {
+                    $response = $this->getFurniture($this->getFurnitureId());
                 } else {
-                    $response = $this->getAllProducts();
+                    $response = $this->getAllFurniture();
                 }
                 break;
             case 'POST':
-                $response = $this->createProductFromRequest();
+                $response = $this->createFurnitureFromRequest();
                 break;
             case 'DELETE':
-                $response = $this->deleteUser($this->getProductId());
+                $response = $this->deleteFurniture($this->getFurnitureId());
                 break;
             default:
                 $response = $this->notFoundResponse();
@@ -38,7 +38,7 @@ class ProductController extends ProductGateway
         }
     }
 
-    private function getAllProducts()
+    private function getAllFurniture()
     {
         $result = $this->read();
         if (!$result) {
@@ -49,7 +49,7 @@ class ProductController extends ProductGateway
         return $response;
     }
 
-    private function getProduct($id)
+    private function getFurniture($id)
     {
         $result = $this->find($id);
         if (!$result) {
@@ -62,10 +62,10 @@ class ProductController extends ProductGateway
 
 
 
-    private function createProductFromRequest()
+    private function createFurnitureFromRequest()
     {
         $input = (array) json_decode(file_get_contents('php://input'), true);
-        if (!$this->validateProduct($input)) {
+        if (!$this->validateFurniture($input)) {
             return $this->unprocessableEntityResponse($this->getErrorMsg());
         }
         $this->insert($input);
@@ -75,7 +75,7 @@ class ProductController extends ProductGateway
     }
 
 
-    private function deleteUser($id)
+    private function deleteFurniture($id)
     {
         $result = $this->find($id);
         if (!$result) {
@@ -87,7 +87,7 @@ class ProductController extends ProductGateway
         return $response;
     }
 
-    private function validateProduct($input)
+    private function validateFurniture($input)
     {
         $nullValueArr = array_keys($input, null, true);
         $emptyValueArr = array_keys($input, "", true);
@@ -144,21 +144,21 @@ class ProductController extends ProductGateway
     }
 
     /**
-     * Get the value of productId
+     * Get the value of furnitureId
      */
-    public function getProductId()
+    public function getFurnitureId()
     {
-        return $this->productId;
+        return $this->furnitureId;
     }
 
     /**
-     * Set the value of productId
+     * Set the value of furnitureId
      *
      * @return self
      */
-    public function setProductId($productId)
+    public function setFurnitureId($furnitureId)
     {
-        $this->productId = $productId;
+        $this->furnitureId = $furnitureId;
 
         return $this;
     }

@@ -2,7 +2,13 @@
 
 require "../bootstrap.php";
 
-use Src\Controller\ProductController;
+use Src\Controller\DvdController;
+use Src\Controller\FurnitureController;
+use Src\Controller\BookController;
+
+const BOOK = "book";
+const DVD = "dvd";
+const FURNITURE = "furniture";
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
@@ -26,20 +32,60 @@ if ($requestMethod === 'OPTIONS') {
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
-// all of our endpoints start with /products
+// all of the endpoints start with /products
 // everything else results in a 404 Not Found
 if ($uri[1] !== 'products') {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
 
-$controller = new ProductController($dbConnection);
-$controller->setRequestMethod($requestMethod);
-
-if (isset($_GET['product_id'])) {
-    $controller->setProductId((string) $_GET['product_id']);
-} else {
-    $controller->setProductId(null);
+if (
+    !isset($_GET['product_type'])
+    || ($_GET['product_type'] !== BOOK
+        && $_GET['product_type'] !== DVD
+        && $_GET['product_type'] !== FURNITURE)
+) {
+    echo $_GET['product_type'] !== BOOK;
+    header("HTTP/1.1 422 Unprocessable Entity");
+    exit();
 }
 
-$controller->processRequest();
+
+if ($_GET['product_type'] === BOOK) {
+    $bookController = new BookController($dbConnection);
+    $bookController->setRequestMethod($requestMethod);
+
+    if (isset($_GET['product_id'])) {
+        $bookController->setBookId((int) $_GET['product_id']);
+    } else {
+        $bookController->setBookId(null);
+    }
+
+    $bookController->processRequest();
+}
+
+if ($_GET['product_type'] === DVD) {
+    $dvdController = new DvdController($dbConnection);
+    $dvdController->setRequestMethod($requestMethod);
+
+    if (isset($_GET['product_id'])) {
+        $dvdController->setDvdId((int) $_GET['product_id']);
+    } else {
+        $dvdController->setDvdId(null);
+    }
+
+    $dvdController->processRequest();
+}
+
+if ($_GET['product_type'] === FURNITURE) {
+    $furnitureController = new FurnitureController($dbConnection);
+    $furnitureController->setRequestMethod($requestMethod);
+
+    if (isset($_GET['product_id'])) {
+        $furnitureController->setFurnitureId((int) $_GET['product_id']);
+    } else {
+        $furnitureController->setFurnitureId(null);
+    }
+
+    $furnitureController->processRequest();
+}
