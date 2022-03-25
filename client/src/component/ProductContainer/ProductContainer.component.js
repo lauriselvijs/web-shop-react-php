@@ -1,50 +1,95 @@
 import React, { Component } from "react";
 import "./ProductContainer.style.scss";
 import axios from "axios";
-// import Book from "../Book";
-// import Furniture from "../Furniture";
-// import Dvd from "../Dvd";
+import Book from "../Book";
+import Furniture from "../Furniture";
+import Dvd from "../Dvd";
+import { Product } from "../../constant/Product";
+
+const { DVD, FURNITURE, BOOK } = Product;
 
 export class ProductContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      products: [],
+      dvdProducts: [],
+      furnitureProducts: [],
+      bookProducts: [],
     };
   }
 
   async componentDidMount() {
     const hostname = window.location.hostname;
     const protocol = window.location.protocol;
+    const { dvdProducts, bookProducts, furnitureProducts } = this.state;
 
     try {
-      const productData = await axios.get(
-        `${protocol}//${hostname}/products/public/?product_type=dvd`
+      const bookData = await axios.get(
+        `${protocol}//${hostname}/products/public/`,
+        {
+          params: { product_type: BOOK },
+        }
       );
-      // http://localhost/products/public/?product_type=dvd&product_id=1
-
-      console.log(productData.data);
 
       this.setState({
-        products: [...this.state.products, ...productData.data],
+        bookProducts: [...bookProducts, ...bookData.data],
       });
     } catch (error) {
       this.setState({
-        products: [],
+        bookProducts: [],
       });
-      return error;
+    }
+
+    try {
+      const dvdData = await axios.get(
+        `${protocol}//${hostname}/products/public/`,
+        {
+          params: { product_type: DVD },
+        }
+      );
+
+      this.setState({
+        dvdProducts: [...dvdProducts, ...dvdData.data],
+      });
+    } catch (error) {
+      this.setState({
+        dvdProducts: [],
+      });
+    }
+
+    try {
+      const furnitureData = await axios.get(
+        `${protocol}//${hostname}/products/public/`,
+        {
+          params: { product_type: FURNITURE },
+        }
+      );
+
+      this.setState({
+        furnitureProducts: [...furnitureProducts, ...furnitureData.data],
+      });
+    } catch (error) {
+      this.setState({
+        furnitureProducts: [],
+      });
     }
   }
 
   render() {
-    // const { products } = this.state;
+    const { dvdProducts, bookProducts, furnitureProducts } = this.state;
 
     return (
       <section className="product-view-grid-container">
-        {/* {products.map((product, index) => (
+        {dvdProducts.map((product, index) => (
           <Dvd product={product} key={index} />
-        ))} */}
+        ))}
+        {bookProducts.map((product, index) => (
+          <Book product={product} key={index} />
+        ))}
+        {furnitureProducts.map((product, index) => (
+          <Furniture product={product} key={index} />
+        ))}
       </section>
     );
   }
