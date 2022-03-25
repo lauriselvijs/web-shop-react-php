@@ -1,25 +1,26 @@
 import React, { Component } from "react";
 import "./Book.style.scss";
 import PropTypes from "prop-types";
+import { Product } from "../../constant/Product";
+
+const { BOOK } = Product;
 
 export class Book extends Component {
   render() {
-    const { id, sku, name, price, type, product_attribute } =
-      this.props.product;
+    const { id, sku, name, price, weight } = this.props.product;
 
     return (
-      <div className="product-item">
+      <div className="book-item">
         <div>{sku}</div>
         <div>{name}</div>
         <div>{price} $</div>
-        <div>
-          {type.toLowerCase() === "dvd" && <>Size: {product_attribute} MB</>}
-          {type.toLowerCase() === "book" && <>Weight: {product_attribute} KG</>}
-          {type.toLowerCase() === "furniture" && (
-            <>Dimension: {product_attribute}</>
-          )}
-        </div>
-        <input type="checkbox" name={id} className="delete-checkbox" />
+        <div>Weight: {weight} KG</div>
+        <input
+          type="checkbox"
+          name={BOOK}
+          id={id}
+          className="delete-checkbox"
+        />
       </div>
     );
   }
@@ -31,8 +32,7 @@ Book.propTypes = {
     sku: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.string,
-    type: PropTypes.string,
-    product_attribute: PropTypes.string,
+    weight: PropTypes.string,
   }),
 };
 
@@ -42,8 +42,7 @@ Book.defaultProps = {
     sku: "SKUTest000",
     name: "NameTest000",
     price: "25.0",
-    type: "DVD",
-    product_attribute: "200",
+    weight: "2",
   },
 };
 

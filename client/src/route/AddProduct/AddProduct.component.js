@@ -1,36 +1,39 @@
-import React, { Component } from "react"
-import "./AddProduct.style.scss"
-import InputErrMsg from "../../component/inputErrMsg"
-import { Navigate } from "react-router-dom"
-import axios from "axios"
-import CancelBtn from "../../component/CancelBtn"
-import Title from "../../component/TItle"
-import SaveBtn from "../../component/SaveBtn"
-import Header from "../../component/Header"
-import LineBreak from "../../component/LineBreak"
-import BookForm from "../../component/BookForm"
-import DvdForm from "../../component/DvdForm"
-import FurnitureForm from "../../component/FurnitureForm"
+import React, { Component } from "react";
+import "./AddProduct.style.scss";
+import InputErrMsg from "../../component/inputErrMsg";
+import { Navigate } from "react-router-dom";
+import axios from "axios";
+import CancelBtn from "../../component/CancelBtn";
+import Title from "../../component/TItle";
+import SaveBtn from "../../component/SaveBtn";
+import Header from "../../component/Header";
+import LineBreak from "../../component/LineBreak";
+import BookForm from "../../component/BookForm";
+import DvdForm from "../../component/DvdForm";
+import FurnitureForm from "../../component/FurnitureForm";
+import { Product } from "../../constant/Product";
+
+const { BOOK, DVD, FURNITURE } = Product;
 
 export class AddProduct extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
 
-    this.onSave = this.onSave.bind(this)
+    this.onSave = this.onSave.bind(this);
 
-    this.onSKUChange = this.onSKUChange.bind(this)
-    this.onNameChange = this.onNameChange.bind(this)
-    this.onPriceChange = this.onPriceChange.bind(this)
+    this.onSKUChange = this.onSKUChange.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
+    this.onPriceChange = this.onPriceChange.bind(this);
 
-    this.onDropdownChange = this.onDropdownChange.bind(this)
+    this.onDropdownChange = this.onDropdownChange.bind(this);
 
-    this.onDvdSizeChange = this.onDvdSizeChange.bind(this)
+    this.onDvdSizeChange = this.onDvdSizeChange.bind(this);
 
-    this.onFurnitureHeightChange = this.onFurnitureHeightChange.bind(this)
-    this.onFurnitureLengthChange = this.onFurnitureLengthChange.bind(this)
-    this.onFurnitureWidthChange = this.onFurnitureWidthChange.bind(this)
+    this.onFurnitureHeightChange = this.onFurnitureHeightChange.bind(this);
+    this.onFurnitureLengthChange = this.onFurnitureLengthChange.bind(this);
+    this.onFurnitureWidthChange = this.onFurnitureWidthChange.bind(this);
 
-    this.onBookWeightSizeChange = this.onBookWeightSizeChange.bind(this)
+    this.onBookWeightSizeChange = this.onBookWeightSizeChange.bind(this);
 
     this.state = {
       error: false,
@@ -38,61 +41,60 @@ export class AddProduct extends Component {
       SKU: "",
       name: "",
       price: "",
-      selectValue: "DVD",
+      selectValue: DVD,
       dvdSize: "",
       furnitureHeight: "",
       furnitureLength: "",
       furnitureWidth: "",
       bookWeight: "",
-      productObj: {},
-      errorMsg: ""
-    }
+      errorMsg: "",
+    };
   }
 
-  onSKUChange (e) {
+  onSKUChange(e) {
     this.setState({
-      SKU: e.target.value
-    })
+      SKU: e.target.value,
+    });
   }
 
-  onNameChange (e) {
+  onNameChange(e) {
     this.setState({
-      name: e.target.value
-    })
+      name: e.target.value,
+    });
   }
 
-  onPriceChange (e) {
+  onPriceChange(e) {
     this.setState({
-      price: e.target.value
-    })
+      price: e.target.value,
+    });
   }
 
-  onDropdownChange (e) {
-    this.setState({ selectValue: e.target.value })
+  onDropdownChange(e) {
+    this.setState({ selectValue: e.target.value });
   }
 
-  onDvdSizeChange (e) {
-    this.setState({ dvdSize: e.target.value })
+  onDvdSizeChange(e) {
+    this.setState({ dvdSize: e.target.value });
   }
 
-  onFurnitureHeightChange (e) {
-    this.setState({ furnitureHeight: e.target.value })
+  onFurnitureHeightChange(e) {
+    this.setState({ furnitureHeight: e.target.value });
   }
 
-  onFurnitureLengthChange (e) {
-    this.setState({ furnitureLength: e.target.value })
+  onFurnitureLengthChange(e) {
+    this.setState({ furnitureLength: e.target.value });
   }
 
-  onFurnitureWidthChange (e) {
-    this.setState({ furnitureWidth: e.target.value })
+  onFurnitureWidthChange(e) {
+    this.setState({ furnitureWidth: e.target.value });
   }
 
-  onBookWeightSizeChange (e) {
-    this.setState({ bookWeight: e.target.value })
+  onBookWeightSizeChange(e) {
+    this.setState({ bookWeight: e.target.value });
   }
 
-  async onSave (e) {
-    e.preventDefault()
+  async onSave(e) {
+    e.preventDefault();
 
     const {
       selectValue,
@@ -103,111 +105,132 @@ export class AddProduct extends Component {
       bookWeight,
       furnitureHeight,
       furnitureLength,
-      furnitureWidth
-    } = this.state
+      furnitureWidth,
+    } = this.state;
 
-    let emptyValueArray = []
-    const correctDataType = []
-    let productAttribute = []
+    let emptyValueArray = [];
+    const correctDataType = [];
 
     const productObj = {
       SKU,
       name,
-      price
-    }
+      price,
+    };
 
-    const hostname = window.location.hostname
-    const protocol = window.location.protocol
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
 
     emptyValueArray = Object.keys(productObj).filter(
       (key) => productObj[key] === ""
-    )
+    );
 
-    isNaN(price) && correctDataType.push("price")
+    isNaN(price) && correctDataType.push("price");
 
-    if (selectValue === "DVD") {
+    if (selectValue === DVD) {
       if (!dvdSize) {
-        emptyValueArray = [...emptyValueArray, "size"]
-      } else {
-        productAttribute = [...productAttribute, dvdSize]
+        emptyValueArray = [...emptyValueArray, "size"];
       }
 
-      isNaN(dvdSize) && correctDataType.push("size")
+      isNaN(dvdSize) && correctDataType.push("size");
     }
 
-    if (selectValue === "Book") {
+    if (selectValue === BOOK) {
       if (!bookWeight) {
-        emptyValueArray = [...emptyValueArray, "weight"]
-      } else {
-        productAttribute = [...productAttribute, bookWeight]
+        emptyValueArray = [...emptyValueArray, "weight"];
       }
 
-      isNaN(bookWeight) && correctDataType.push("weight")
+      isNaN(bookWeight) && correctDataType.push("weight");
     }
 
-    if (selectValue === "Furniture") {
+    if (selectValue === FURNITURE) {
       if (!furnitureHeight) {
-        emptyValueArray = [...emptyValueArray, "height"]
-      } else {
-        productAttribute = [...productAttribute, furnitureHeight]
+        emptyValueArray = [...emptyValueArray, "height"];
       }
 
       if (!furnitureLength) {
-        emptyValueArray = [...emptyValueArray, "length"]
-      } else {
-        productAttribute = [...productAttribute, furnitureLength]
+        emptyValueArray = [...emptyValueArray, "length"];
       }
 
       if (!furnitureWidth) {
-        emptyValueArray = [...emptyValueArray, "width"]
-      } else {
-        productAttribute = [...productAttribute, furnitureWidth]
+        emptyValueArray = [...emptyValueArray, "width"];
       }
 
-      isNaN(furnitureHeight) && correctDataType.push("height")
-      isNaN(furnitureLength) && correctDataType.push("length")
-      isNaN(furnitureWidth) && correctDataType.push("width")
+      isNaN(furnitureHeight) && correctDataType.push("height");
+      isNaN(furnitureLength) && correctDataType.push("length");
+      isNaN(furnitureWidth) && correctDataType.push("width");
     }
 
     if (emptyValueArray.length === 0) {
       if (correctDataType.length === 0) {
         try {
-          await axios.post(`${protocol}//${hostname}/products/public/`, {
-            sku: SKU,
-            name: name,
-            price: price,
-            product_attribute: productAttribute.join("x"),
-            type: selectValue
-          })
+          console.log(selectValue);
+
+          selectValue === BOOK &&
+            (await axios.post(
+              `${protocol}//${hostname}/products/public/`,
+              {
+                sku: SKU,
+                name: name,
+                price: price,
+                weight: bookWeight,
+              },
+              { params: { product_type: BOOK } }
+            ));
+
+          selectValue === DVD &&
+            (await axios.post(
+              `${protocol}//${hostname}/products/public/`,
+              {
+                sku: SKU,
+                name: name,
+                price: price,
+                size: dvdSize,
+              },
+              { params: { product_type: DVD } }
+            ));
+
+          selectValue === FURNITURE &&
+            (await axios.post(
+              `${protocol}//${hostname}/products/public/`,
+              {
+                sku: SKU,
+                name: name,
+                price: price,
+                height: furnitureHeight,
+                width: furnitureWidth,
+                length: furnitureLength,
+              },
+              { params: { product_type: FURNITURE } }
+            ));
 
           this.setState({
             errorMsg: "",
             error: false,
-            saved: true
-          })
+            saved: true,
+          });
         } catch (error) {
-          console.log(error)
-          return error
+          console.log(error);
+          return error;
         }
       } else {
         this.setState({
           errorMsg: `Please, provide the data of indicated type ${correctDataType.map(
             (value) => " " + value
           )}`,
-          error: true
-        })
+          error: true,
+        });
       }
     } else {
       this.setState({
         errorMsg: `Please, submit required data ${emptyValueArray.map(
           (value) => " " + value
         )}`,
-        error: true
-      })
+        error: true,
+      });
     }
   }
 
-  render () {
+  render() {
     const {
       error,
       errorMsg,
@@ -220,10 +243,10 @@ export class AddProduct extends Component {
       furnitureHeight,
       furnitureLength,
       furnitureWidth,
-      bookWeight
-    } = this.state
+      bookWeight,
+    } = this.state;
 
-    if (saved) return <Navigate to="/" />
+    if (saved) return <Navigate to="/" />;
 
     return (
       <>
@@ -288,20 +311,20 @@ export class AddProduct extends Component {
                   defaultValue={selectValue}
                   onChange={this.onDropdownChange}
                 >
-                  <option id="DVD" value="DVD">
+                  <option id="DVD" value={DVD}>
                     DVD
                   </option>
-                  <option id="Furniture" value="Furniture">
+                  <option id="Furniture" value={FURNITURE}>
                     Furniture
                   </option>
-                  <option id="Book" value="Book">
+                  <option id="Book" value={BOOK}>
                     Book
                   </option>
                 </select>
               </div>
             </div>
 
-            {selectValue === "DVD" && (
+            {selectValue === DVD && (
               <>
                 <DvdForm
                   dvdSize={dvdSize}
@@ -310,7 +333,7 @@ export class AddProduct extends Component {
               </>
             )}
 
-            {selectValue === "Furniture" && (
+            {selectValue === FURNITURE && (
               <>
                 <FurnitureForm
                   furnitureHeight={furnitureHeight}
@@ -323,7 +346,7 @@ export class AddProduct extends Component {
               </>
             )}
 
-            {selectValue === "Book" && (
+            {selectValue === BOOK && (
               <>
                 <BookForm
                   bookWeight={bookWeight}
@@ -335,8 +358,8 @@ export class AddProduct extends Component {
           {error && <InputErrMsg errorMsg={errorMsg} />}
         </div>
       </>
-    )
+    );
   }
 }
 
-export default AddProduct
+export default AddProduct;
