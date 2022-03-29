@@ -7,7 +7,7 @@ use Src\TableGateways\FurnitureGateway;
 class FurnitureController extends FurnitureGateway
 {
     private $requestMethod;
-    private $furnitureId;
+    private $productId;
 
     private $errorMsg;
 
@@ -16,17 +16,17 @@ class FurnitureController extends FurnitureGateway
     {
         switch ($this->getRequestMethod()) {
             case 'GET':
-                if ($this->getFurnitureId()) {
-                    $response = $this->getFurniture($this->getFurnitureId());
+                if ($this->getProductId()) {
+                    $response = $this->getProduct($this->getProductId());
                 } else {
-                    $response = $this->getAllFurniture();
+                    $response = $this->getAllProduct();
                 }
                 break;
             case 'POST':
-                $response = $this->createFurnitureFromRequest();
+                $response = $this->createProductFromRequest();
                 break;
             case 'DELETE':
-                $response = $this->deleteFurniture($this->getFurnitureId());
+                $response = $this->deleteProduct($this->getProductId());
                 break;
             default:
                 $response = $this->notFoundResponse();
@@ -38,7 +38,7 @@ class FurnitureController extends FurnitureGateway
         }
     }
 
-    private function getAllFurniture()
+    private function getAllProduct()
     {
         $result = $this->read();
         if (!$result) {
@@ -49,7 +49,7 @@ class FurnitureController extends FurnitureGateway
         return $response;
     }
 
-    private function getFurniture($id)
+    private function getProduct($id)
     {
         $result = $this->find($id);
         if (!$result) {
@@ -62,10 +62,10 @@ class FurnitureController extends FurnitureGateway
 
 
 
-    private function createFurnitureFromRequest()
+    private function createProductFromRequest()
     {
         $input = (array) json_decode(file_get_contents('php://input'), true);
-        if (!$this->validateFurniture($input)) {
+        if (!$this->validateProduct($input)) {
             return $this->unprocessableEntityResponse($this->getErrorMsg());
         }
         $this->insert($input);
@@ -75,7 +75,7 @@ class FurnitureController extends FurnitureGateway
     }
 
 
-    private function deleteFurniture($id)
+    private function deleteProduct($id)
     {
         $result = $this->find($id);
         if (!$result) {
@@ -87,10 +87,15 @@ class FurnitureController extends FurnitureGateway
         return $response;
     }
 
-    private function validateFurniture($input)
+    private function validateProduct($input)
     {
         $nullValueArr = array_keys($input, null, true);
         $emptyValueArr = array_keys($input, "", true);
+
+        if (!is_numeric($input["width"])) {
+            $this->setErrorMsg("Width is not a number");
+            return false;
+        }
 
         if ($nullValueArr) {
             $this->setErrorMsg("Missing values found: " . implode(", ", $nullValueArr));
@@ -144,21 +149,21 @@ class FurnitureController extends FurnitureGateway
     }
 
     /**
-     * Get the value of furnitureId
+     * Get the value of productId
      */
-    public function getFurnitureId()
+    public function getProductId()
     {
-        return $this->furnitureId;
+        return $this->productId;
     }
 
     /**
-     * Set the value of furnitureId
+     * Set the value of productId
      *
      * @return self
      */
-    public function setFurnitureId($furnitureId)
+    public function setProductId($productId)
     {
-        $this->furnitureId = $furnitureId;
+        $this->productId = $productId;
 
         return $this;
     }

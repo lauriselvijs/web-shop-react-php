@@ -56,9 +56,9 @@ if ($_GET['product_type'] === BOOK) {
     $bookController->setRequestMethod($requestMethod);
 
     if (isset($_GET['product_id'])) {
-        $bookController->setBookId((int) $_GET['product_id']);
+        $bookController->setProductId((int) $_GET['product_id']);
     } else {
-        $bookController->setBookId(null);
+        $bookController->setProductId(null);
     }
 
     $bookController->processRequest();
@@ -69,9 +69,9 @@ if ($_GET['product_type'] === DVD) {
     $dvdController->setRequestMethod($requestMethod);
 
     if (isset($_GET['product_id'])) {
-        $dvdController->setDvdId((int) $_GET['product_id']);
+        $dvdController->setProductId((int) $_GET['product_id']);
     } else {
-        $dvdController->setDvdId(null);
+        $dvdController->setProductId(null);
     }
 
     $dvdController->processRequest();
@@ -82,9 +82,9 @@ if ($_GET['product_type'] === FURNITURE) {
     $furnitureController->setRequestMethod($requestMethod);
 
     if (isset($_GET['product_id'])) {
-        $furnitureController->setFurnitureId((int) $_GET['product_id']);
+        $furnitureController->setProductId((int) $_GET['product_id']);
     } else {
-        $furnitureController->setFurnitureId(null);
+        $furnitureController->setProductId(null);
     }
 
     $furnitureController->processRequest();

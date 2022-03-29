@@ -7,7 +7,7 @@ use Src\TableGateways\BookGateway;
 class BookController extends BookGateway
 {
     private $requestMethod;
-    private $bookId;
+    private $productId;
 
     private $errorMsg;
 
@@ -16,17 +16,17 @@ class BookController extends BookGateway
     {
         switch ($this->getRequestMethod()) {
             case 'GET':
-                if ($this->getBookId()) {
-                    $response = $this->getBook($this->getBookId());
+                if ($this->getProductId()) {
+                    $response = $this->getProduct($this->getProductId());
                 } else {
-                    $response = $this->getAllBooks();
+                    $response = $this->getAllProducts();
                 }
                 break;
             case 'POST':
-                $response = $this->createBookFromRequest();
+                $response = $this->createProductFromRequest();
                 break;
             case 'DELETE':
-                $response = $this->deleteBook($this->getBookId());
+                $response = $this->deleteProduct($this->getProductId());
                 break;
             default:
                 $response = $this->notFoundResponse();
@@ -38,7 +38,7 @@ class BookController extends BookGateway
         }
     }
 
-    private function getAllBooks()
+    private function getAllProducts()
     {
         $result = $this->read();
         if (!$result) {
@@ -49,7 +49,7 @@ class BookController extends BookGateway
         return $response;
     }
 
-    private function getBook($id)
+    private function getProduct($id)
     {
         $result = $this->find($id);
         if (!$result) {
@@ -60,10 +60,10 @@ class BookController extends BookGateway
         return $response;
     }
 
-    private function createBookFromRequest()
+    private function createProductFromRequest()
     {
         $input = (array) json_decode(file_get_contents('php://input'), true);
-        if (!$this->validateBook($input)) {
+        if (!$this->validateProduct($input)) {
             return $this->unprocessableEntityResponse($this->getErrorMsg());
         }
         $this->insert($input);
@@ -73,7 +73,7 @@ class BookController extends BookGateway
     }
 
 
-    private function deleteBook($id)
+    private function deleteProduct($id)
     {
         $result = $this->find($id);
         if (!$result) {
@@ -85,10 +85,15 @@ class BookController extends BookGateway
         return $response;
     }
 
-    private function validateBook($input)
+    private function validateProduct($input)
     {
         $nullValueArr = array_keys($input, null, true);
         $emptyValueArr = array_keys($input, "", true);
+
+        if (!is_numeric($input["size"])) {
+            $this->setErrorMsg("Size is not a number");
+            return false;
+        }
 
         if ($nullValueArr) {
             $this->setErrorMsg("Missing values found: " . implode(", ", $nullValueArr));
@@ -142,21 +147,21 @@ class BookController extends BookGateway
     }
 
     /**
-     * Get the value of bookId
+     * Get the value of productId
      */
-    public function getBookId()
+    public function getProductId()
     {
-        return $this->bookId;
+        return $this->productId;
     }
 
     /**
-     * Set the value of bookId
+     * Set the value of ProductId
      *
      * @return self
      */
-    public function setBookId($bookId)
+    public function setProductId($productId)
     {
-        $this->bookId = $bookId;
+        $this->productId = $productId;
 
         return $this;
     }

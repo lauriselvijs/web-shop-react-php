@@ -7,7 +7,7 @@ use Src\TableGateways\DvdGateway;
 class DvdController extends DvdGateway
 {
     private $requestMethod;
-    private $dvdId;
+    private $productId;
 
     private $errorMsg;
 
@@ -16,17 +16,17 @@ class DvdController extends DvdGateway
     {
         switch ($this->getRequestMethod()) {
             case 'GET':
-                if ($this->getDvdId()) {
-                    $response = $this->getDvd($this->getDvdId());
+                if ($this->getProductId()) {
+                    $response = $this->getProduct($this->getProductId());
                 } else {
-                    $response = $this->getAllDvds();
+                    $response = $this->getAllProducts();
                 }
                 break;
             case 'POST':
-                $response = $this->createDvdFromRequest();
+                $response = $this->createProductFromRequest();
                 break;
             case 'DELETE':
-                $response = $this->deleteDvd($this->getDvdId());
+                $response = $this->deleteProduct($this->getProductId());
                 break;
             default:
                 $response = $this->notFoundResponse();
@@ -38,7 +38,7 @@ class DvdController extends DvdGateway
         }
     }
 
-    private function getAllDvds()
+    private function getAllProducts()
     {
         $result = $this->read();
         if (!$result) {
@@ -51,7 +51,7 @@ class DvdController extends DvdGateway
         return $response;
     }
 
-    private function getDvd($id)
+    private function getProduct($id)
     {
 
         $result = $this->find($id);
@@ -65,10 +65,10 @@ class DvdController extends DvdGateway
 
 
 
-    private function createDvdFromRequest()
+    private function createProductFromRequest()
     {
         $input = (array) json_decode(file_get_contents('php://input'), true);
-        if (!$this->validateDvd($input)) {
+        if (!$this->validateProduct($input)) {
             return $this->unprocessableEntityResponse($this->getErrorMsg());
         }
         $this->insert($input);
@@ -78,7 +78,7 @@ class DvdController extends DvdGateway
     }
 
 
-    private function deleteDvd($id)
+    private function deleteProduct($id)
     {
         $result = $this->find($id);
         if (!$result) {
@@ -90,10 +90,25 @@ class DvdController extends DvdGateway
         return $response;
     }
 
-    private function validateDvd($input)
+    private function validateProduct($input)
     {
         $nullValueArr = array_keys($input, null, true);
         $emptyValueArr = array_keys($input, "", true);
+
+        if (!is_numeric($input["width"])) {
+            $this->setErrorMsg("Width is not a number");
+            return false;
+        }
+
+        if (!is_numeric($input["length"])) {
+            $this->setErrorMsg("Length is not a number");
+            return false;
+        }
+
+        if (!is_numeric($input["height"])) {
+            $this->setErrorMsg("Height is not a number");
+            return false;
+        }
 
         if ($nullValueArr) {
             $this->setErrorMsg("Missing values found: " . implode(", ", $nullValueArr));
@@ -147,21 +162,21 @@ class DvdController extends DvdGateway
     }
 
     /**
-     * Get the value of dvdId
+     * Get the value of productId
      */
-    public function getDvdId()
+    public function getProductId()
     {
-        return $this->dvdId;
+        return $this->productId;
     }
 
     /**
-     * Set the value of dvdId
+     * Set the value of ProductId
      *
      * @return self
      */
-    public function setDvdId($dvdId)
+    public function setProductId($productId)
     {
-        $this->dvdId = $dvdId;
+        $this->productId = $productId;
 
         return $this;
     }
